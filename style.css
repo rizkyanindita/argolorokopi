@@ -874,6 +874,15 @@ section {
 
 .page-menu { background: var(--cream); }
 
+/* PENJAGA — jangan hapus.
+   Atribut [hidden] hanya bekerja lewat stylesheet bawaan browser
+   (`[hidden] { display: none }`), dan aturan penulis mana pun yang
+   menyetel `display` akan mengalahkannya. `.menu-item { display: flex }`
+   sempat membuat pencarian menghitung dengan benar tapi tetap
+   menampilkan semua item. Selektor ini berspesifisitas 0,2,0 sehingga
+   menang atas aturan kelas tunggal — tanpa perlu !important. */
+.page-menu [hidden] { display: none; }
+
 /* Seluruh blok navigasi menempel sebagai satu kesatuan. Tingginya
    diukur JS lewat getBoundingClientRect, jadi menambah baris baru
    tidak perlu menyetel ulang offset di mana pun. */
@@ -1043,6 +1052,10 @@ section {
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  /* Memudar di tepi kanan supaya chip terakhir terbaca sebagai
+     "masih ada lagi", bukan terpotong tiba-tiba oleh tombol ☰. */
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent 100%);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent 100%);
 }
 
 .chips-all {
@@ -1282,6 +1295,19 @@ section {
   padding: 16px 18px 26px;
   overflow-y: auto;
 }
+
+.catsheet-grup {
+  grid-column: 1 / -1;
+  margin: 6px 0 0;
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.catsheet-grup:first-child { margin-top: 0; }
 
 .catsheet-item {
   display: flex;

@@ -27,6 +27,91 @@
    Pindah grup   : ubah nilai grup.
    ============================================================ */
 
+/* ============================================================
+   SINONIM PENCARIAN
+   ============================================================
+   Nama menu di sini berbahasa Inggris, tapi pengunjungnya orang
+   Indonesia. Tanpa tabel ini, mengetik "kopi" hanya menemukan
+   1 item (Kopi Tubruk) dari 22 minuman berbasis kopi.
+
+   Cara kerja: kalau salah satu kata di `cocok` muncul sebagai
+   KATA UTUH pada nama item ATAU nama kategorinya, seluruh kata di
+   `kata` ditempelkan ke teks pencarian — tidak terlihat di layar.
+
+   `kecuali` (opsional): kalau frasa ini ada, aturan dilewati.
+   Dipakai untuk frasa yang membalik makna, seperti "Non Coffee"
+   yang mengandung kata "coffee" tapi justru berarti bukan kopi.
+
+   PENTING: pencocokan memakai batas kata, bukan potongan teks.
+   Dulu memakai potongan, dan "Platter" (p-LATTE-r) membuat makanan
+   pembuka ikut dianggap kopi. Jangan kembalikan ke indexOf biasa.
+
+   Menambah sinonim: tambahkan satu baris. Tidak perlu ubah kode.
+   ============================================================ */
+
+var SINONIM = [
+  /* --- minuman --- */
+  { cocok: ["coffee", "espresso", "latte", "cappucino", "mocha", "machiato",
+            "affogato", "manual brewing", "tubruk", "v60", "vietnamdrip",
+            "black series", "long black"],
+    kecuali: ["non coffee"], kata: "kopi coffee" },
+  // Dipisah: "susu" saja tidak boleh membuat sesuatu jadi kopi —
+  // kalau digabung, Susu Jahe ikut muncul saat mencari "kopi".
+  { cocok: ["latte", "cappucino"],
+    kecuali: ["non coffee"], kata: "kopi susu milk" },
+  { cocok: ["susu", "milk"], kata: "susu milk" },
+  { cocok: ["tea", "teh"], kata: "teh tea" },
+  { cocok: ["juice"], kata: "jus juice" },
+  { cocok: ["smoothie", "frappe", "blend", "ice", "mojito", "mocktail"],
+    kata: "es dingin cold iced" },
+  { cocok: ["hot", "wedang", "jahe", "bandrek", "uwuh"],
+    kata: "panas hangat wedangan" },
+  { cocok: ["chocolate", "choco", "mocha", "nuttela", "biscoff", "oreo"],
+    kata: "cokelat coklat" },
+  { cocok: ["jahe"], kata: "ginger" },
+  { cocok: ["matcha"], kata: "teh hijau green tea" },
+  { cocok: ["taro"], kata: "talas" },
+  { cocok: ["red velvet"], kata: "merah" },
+  { cocok: ["peanut", "nut", "hazzelnut", "nuttela"], kata: "kacang" },
+  { cocok: ["caramel", "butterscotch"], kata: "karamel manis" },
+  { cocok: ["vanilla"], kata: "vanila" },
+
+  /* --- buah --- */
+  { cocok: ["strawberry"], kata: "stroberi strawberi buah" },
+  { cocok: ["avocado"], kata: "alpukat buah" },
+  { cocok: ["orange"], kata: "jeruk buah" },
+  { cocok: ["watermelon"], kata: "semangka buah" },
+  { cocok: ["melon"], kata: "buah" },
+  { cocok: ["banana"], kata: "pisang buah" },
+  { cocok: ["lychee"], kata: "leci buah" },
+  { cocok: ["lemon", "lime", "lemonade"], kata: "jeruk asam" },
+  { cocok: ["peach"], kata: "persik buah" },
+  { cocok: ["fruit punch", "berry"], kata: "buah" },
+
+  /* --- makanan --- */
+  { cocok: ["chicken", "ayam", "karage", "katsu", "geprek"], kata: "ayam chicken" },
+  { cocok: ["beef", "iga", "gyudon", "buntut", "sapi"], kata: "sapi daging beef" },
+  { cocok: ["fish", "ikan"], kata: "ikan fish" },
+  { cocok: ["udang", "ebi"], kata: "udang seafood" },
+  { cocok: ["cumi", "seafood"], kata: "seafood laut" },
+  { cocok: ["rice bowl", "nasi"], kata: "nasi rice" },
+  { cocok: ["mie", "noodle"], kata: "mie mi noodle" },
+  { cocok: ["pasta", "aglio", "bolognese", "carbonara"], kata: "pasta mie italia" },
+  { cocok: ["pizza"], kata: "pizza" },
+  { cocok: ["cheese", "keju"], kata: "keju cheese" },
+  { cocok: ["sambal", "geprek", "lada", "tomyum"], kata: "pedas spicy" },
+  { cocok: ["french fries", "potato"], kata: "kentang potato" },
+  { cocok: ["starter", "tempe", "tahu", "singkong", "otak-otak", "risol",
+            "enoki", "onion", "platter"], kata: "camilan snack gorengan pembuka" },
+  { cocok: ["dimsum", "siomay", "lumpia", "ekado", "furai"], kata: "dimsum" },
+  { cocok: ["soup"], kata: "sup soto kuah berkuah" },
+  { cocok: ["ice cream", "banana split"], kata: "es krim dessert manis pencuci mulut" },
+  { cocok: ["mushroom"], kata: "jamur" },
+  { cocok: ["pepperoni"], kata: "sosis daging" },
+  { cocok: ["egg"], kata: "telur" },
+  { cocok: ["special menu"], kata: "utama berat main course" }
+];
+
 var MENU = [
 
   /* ==================== MINUMAN ==================== */

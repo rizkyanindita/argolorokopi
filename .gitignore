@@ -1,1 +1,5 @@
+# Kredensial & cache Vercel — jangan pernah di-commit
 .vercel
+
+# macOS
+.DS_Store

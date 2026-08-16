@@ -30,7 +30,52 @@
     return node;
   }
 
-  function norm(s) { return (s || "").toLowerCase().trim(); }
+  // Diakritik dibuang: pengunjung mengetik "cafe latte", bukan "café latte".
+  // Tanpa ini, satu-satunya item beraksen di menu tidak pernah ketemu.
+  function norm(s) {
+    return (s || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
+
+  // Cocokkan sebagai KATA UTUH, bukan potongan teks.
+  // Dengan indexOf biasa, "platter" mengandung "latte" (p-latte-r) sehingga
+  // makanan pembuka ikut dianggap kopi. Batasnya memakai karakter
+  // non-alfanumerik supaya "otak-otak" dan "v60" tetap tertangkap.
+  function adaKata(teks, frasa) {
+    var aman = frasa.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp("(^|[^a-z0-9])" + aman + "($|[^a-z0-9])").test(teks);
+  }
+
+  // Rakit teks tersembunyi yang dipakai pencarian: nama item, keterangan,
+  // nama kategori, plus sinonim Bahasa Indonesia yang cocok.
+  function haystack(item, kat) {
+    var dasar = norm([item.n, item.ket, kat.nama, kat.catatan].join(" "));
+    var tambahan = [];
+
+    if (typeof SINONIM !== "undefined") {
+      SINONIM.forEach(function (aturan) {
+        // `kecuali` menangani frasa yang membalik makna — "Non Coffee"
+        // mengandung kata "coffee" tapi justru berarti bukan kopi.
+        var dikecualikan = (aturan.kecuali || []).some(function (k) {
+          return adaKata(dasar, norm(k));
+        });
+        if (dikecualikan) return;
+
+        var kena = aturan.cocok.some(function (c) {
+          return adaKata(dasar, norm(c));
+        });
+        if (kena) tambahan.push(norm(aturan.kata));
+      });
+    }
+
+    // Supaya mengetik "favorit" memunculkan seluruh rekomendasi.
+    if (item.fav) tambahan.push("favorit rekomendasi andalan");
+
+    return dasar + " " + tambahan.join(" ");
+  }
 
   // Tinggi blok navigasi diukur dari DOM, bukan ditulis tetap di CSS.
   // Kalau nanti ada baris baru ditambahkan, offsetnya ikut sendiri.
@@ -51,7 +96,7 @@
 
     kat.items.forEach(function (item) {
       var li = el("li", "menu-item");
-      li.setAttribute("data-cari", norm(item.n + " " + kat.nama + " " + (item.ket || "")));
+      li.setAttribute("data-cari", haystack(item, kat));
 
       var kiri = el("span", "menu-item-name");
       kiri.appendChild(document.createTextNode(item.n));
@@ -70,6 +115,8 @@
   });
 
   /* ================= Chip & panel kategori ================= */
+  var grupTerakhir = null;
+
   MENU.forEach(function (kat) {
     var a = el("button", "chip", kat.nama);
     a.type = "button";
@@ -77,6 +124,15 @@
     a.setAttribute("data-grup", kat.grup);
     chipsScroll.appendChild(a);
     chips[kat.id] = a;
+
+    // Panel dikelompokkan per grup — tanpa pemisah, "Ice Cream" dan
+    // "Starter" bersebelahan begitu saja dan batas grupnya tidak terbaca.
+    if (kat.grup !== grupTerakhir) {
+      catSheetBody.appendChild(
+        el("h4", "catsheet-grup", kat.grup === "minuman" ? "Minuman" : "Makanan")
+      );
+      grupTerakhir = kat.grup;
+    }
 
     var b = el("button", "catsheet-item", kat.nama);
     b.type = "button";
@@ -95,6 +151,19 @@
   /* ================= State ================= */
   function terapkan() {
     var q = norm(query);
+    // Dipecah per kata dan semuanya harus ada. Dengan pencocokan substring
+    // utuh, "es kopi" tidak pernah ketemu karena kedua kata itu tidak
+    // berdampingan persis di teks mana pun.
+    // Tiap kata dicocokkan dari AWAL kata, bukan di tengah kata.
+    // Ini menjaga dua hal sekaligus:
+    //   ketik sebagian tetap jalan  — "choco" menemukan "Chocolate"
+    //   potongan di tengah ditolak  — "latte" tidak lagi menemukan "Platter"
+    var kataKunci = q
+      ? q.split(/\s+/).filter(Boolean).map(function (k) {
+          var aman = k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          return new RegExp("(^|[^a-z0-9])" + aman);
+        })
+      : [];
     var cocok = 0;
 
     MENU.forEach(function (kat) {
@@ -102,7 +171,10 @@
       var tampilKat = 0;
 
       Array.prototype.forEach.call(sec.querySelectorAll(".menu-item"), function (li) {
-        var ok = !q || li.getAttribute("data-cari").indexOf(q) !== -1;
+        var teks = li.getAttribute("data-cari");
+        var ok = !kataKunci.length || kataKunci.every(function (re) {
+          return re.test(teks);
+        });
         li.hidden = !ok;
         if (ok) tampilKat++;
       });

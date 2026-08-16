@@ -8,18 +8,25 @@ ini keputusan sadar, alasannya di bagian "Keputusan arsitektur" di bawah.
 
 ---
 
-## ⚠️ BELUM DIVERIFIKASI — kerjakan ini lebih dulu
+## ✅ Halaman menu sudah diverifikasi (16 Agustus 2026)
 
-Revisi terakhir halaman menu **ditulis tapi belum pernah dijalankan di browser.**
-Jangan anggap berfungsi sampai diuji.
+Diuji di browser pada viewport 390×844. Hasil:
 
-Yang belum diuji:
-1. **Perbaikan bug "blink"** pada chip kategori
-2. **Tab Minuman / Makanan** (segmented control)
-3. **Pencarian** menu
-4. **Panel semua kategori** (tombol ☰)
+| Fitur | Hasil |
+|---|---|
+| Bug "blink" chip | **Teratasi** — chip aktif tercatat hanya `["Ice Cream"]` selama scroll |
+| Tab Minuman / Makanan | 11 vs 8 kategori, `scrollY` reset ke 0 saat berpindah |
+| Pencarian | latte→11, pizza→3, wedang→4, zzz→0 + empty state; lintas grup |
+| Panel semua kategori | 19 kategori; pilih dari grup lain ikut memindahkan tab |
+| Error konsol | nol |
 
-Cara menguji:
+**Penyebab bug blink** (supaya tidak terulang): `window.scrollTo` yang halus membuat
+halaman melintasi setiap kategori di antaranya, dan tiap lintasan memicu
+IntersectionObserver. Perbaikannya di `menu.js` — variabel `terkunci` mematikan
+observer selama scroll hasil klik, dilepas 120 ms setelah scroll benar-benar diam.
+**Jangan hapus kunci itu.**
+
+Cara menguji ulang:
 ```bash
 cd /Users/64664/argoloro && python3 -m http.server 8934
 # lalu buka http://localhost:8934/menu.html
@@ -59,6 +66,69 @@ Catatan penting: foto-foto ini **mahal dikompresi** karena daun pakis =
 ribuan helai kecil berkontras tinggi. Format saja tidak cukup, ukuran piksel
 yang menentukan.
 
+### Pencarian menu — sinonim Bahasa Indonesia
+
+Nama menu berbahasa Inggris, pengunjung berbahasa Indonesia. Sebelum diperbaiki,
+mengetik **"kopi" hanya menemukan 1 item** dari 22 minuman berbasis kopi.
+
+Tiga perbaikan di `menu.js` + tabel `SINONIM` di `menu-data.js`:
+
+1. **Tabel sinonim** — kalau kata di `cocok` muncul pada nama item atau kategorinya,
+   kata di `kata` ditempelkan ke teks pencarian (tak terlihat di layar).
+   Menambah sinonim cukup menambah satu baris, tanpa menyentuh kode.
+2. **Diakritik dibuang** (`normalize("NFD")`) — "cafe latte" kini menemukan "Café Latte".
+3. **Pencocokan per kata, bukan substring utuh** — "es kopi" dan "ayam pedas" berhasil.
+   Dengan substring utuh keduanya selalu nihil karena kata-katanya tidak pernah
+   berdampingan persis.
+
+Hasil (diuji di produksi, mobile + desktop, semua lolos):
+`kopi` 1→32 · `ayam pedas`→3 tepat · `teh`→7 · `nasi`→15 · `favorit`→51
+
+#### ⚠️ Jangan hapus `.page-menu [hidden]` di style.css
+
+Atribut `hidden` hanya bekerja lewat stylesheet bawaan browser
+(`[hidden] { display: none }`), dan **aturan CSS penulis mana pun yang menyetel
+`display` akan mengalahkannya.** `.menu-item { display: flex }` sempat membuat
+pencarian menghitung "1 menu cocok" tapi tetap menampilkan seluruh 15 item.
+
+Penjaga `.page-menu [hidden] { display: none }` berspesifisitas 0,2,0 sehingga
+menang atas aturan kelas tunggal, tanpa perlu `!important`. Berlaku untuk semua
+elemen di halaman menu, jadi aturan `display` baru tidak akan menimbulkan bug
+yang sama diam-diam.
+
+**Pelajaran untuk pengujian:** jangan pernah mengukur `:not([hidden])` — itu
+membaca DOM, bukan yang terlihat. Pakai `getComputedStyle(el).display !== 'none'`
+plus cek `getBoundingClientRect()`. Uji versi lama lolos padahal halamannya rusak.
+
+#### Pencocokan harus per KATA, bukan potongan teks
+
+Tiga bug muncul dari pencocokan potongan (`indexOf`), semuanya lolos uji awal
+karena uji itu hanya memeriksa jumlah **minimum** dan tidak pernah memeriksa
+kecocokan **palsu**:
+
+| Gejala | Sebab |
+|---|---|
+| `kopi` memunculkan Red Velvet, Taro, Chocolate, Matcha | `"Non Coffee"` mengandung kata `coffee` |
+| `kopi` memunculkan Mix Platter & Selo Platter | `"Platter"` mengandung `latte` (p-**latte**-r) |
+| `kopi` memunculkan Susu Jahe | satu aturan menggabung `susu` dengan `latte` |
+
+Tiga perbaikan di `menu.js` — **jangan dikembalikan ke `indexOf` biasa**:
+
+1. Sinonim dicocokkan sebagai kata utuh (`adaKata`, regex batas non-alfanumerik).
+2. Field `kecuali` untuk frasa yang membalik makna, dipakai `["non coffee"]`.
+3. Query pengguna dicocokkan dari **awal kata**, bukan tengah kata. Ketik
+   sebagian tetap jalan (`choco`→Chocolate, `moji`→Mojito) tapi `latte` tidak
+   lagi menemukan `Platter`.
+
+Hasil akhir `kopi` = 25 item: 14 Coffee + 3 Manual Brewing + 5 Black Series +
+Lemonade Coffee + Argo Brown Latte + Berry Coffee Breez. Tidak ada yang nyasar.
+
+**Matcha sengaja muncul saat mencari "teh"/"tea"** — matcha adalah teh hijau.
+Kalau tidak diinginkan, hapus `green tea` dari aturan matcha di `menu-data.js`.
+
+Uji regresi ada di `ketat.js` (scratchpad): memeriksa daftar `harus` **dan**
+`jangan` untuk tiap query. Selalu pakai pola itu, bukan jumlah minimum.
+
 ### Halaman menu (`menu.html`)
 - **111 item, 19 kategori** dari ketiga foto menu cetak
 - Data di `menu-data.js` — satu-satunya berkas yang perlu diedit untuk ubah harga
@@ -69,17 +139,31 @@ yang menentukan.
 
 ## Belum selesai / perlu keputusan
 
-### 1. Deploy masih TERKUNCI 🔴 (paling mendesak)
-- URL: **https://argoloro.vercel.app**
+### 1. Deploy ✅ SUDAH PUBLIK (16 Agustus 2026)
+- URL: **https://argoloro.vercel.app** — siap ditempel di bio Instagram
 - Project: `prj_QKjixWfqCezE23b9ATFnis7yEQrn`
 - Team: `team_wdAaKb35RRhb5BF9O5FAUn2k`
 - Akun: `rizkyanindita`
-- **Masalah:** `ssoProtection: enabled` (`all_except_custom_domains`) — semua
-  request dialihkan 302 ke login Vercel. **Pengunjung Instagram belum bisa membuka.**
-- Deploy pertama otomatis jadi production (bukan preview) — ini perilaku Vercel.
-- Pilihan: (a) matikan proteksi → langsung publik, gratis;
-  (b) pasang domain kustom → otomatis publik tanpa mengubah proteksi;
-  (c) biarkan terkunci sampai isinya siap.
+- `ssoProtection` dimatikan. Diverifikasi dari konteks browser bersih tanpa
+  cookie: `/` dan `/menu.html` keduanya `200`, tidak ada redirect ke login.
+- **LCP produksi di 3G lemah: 3.424 ms** (lebih cepat dari lokal karena CDN Vercel).
+
+Cara deploy ulang setelah mengubah berkas:
+```bash
+npx vercel@latest deploy --prod --yes
+```
+Vercel CLI belum terpasang global — `npx` sudah cukup. Akun sudah terautentikasi.
+
+**Setelah deploy, muat ulang paksa** (`Cmd+Shift+R` / `Ctrl+Shift+R`) sebelum
+menilai hasilnya. Tab yang sudah terbuka tetap memakai CSS & JS lama — mengetik
+di kotak pencarian tidak mengunduh ulang berkasnya. Ini sempat membuat perbaikan
+yang sudah live terlihat seolah masih rusak.
+
+Catatan: deploy **tidak** otomatis. Setiap kali mengubah harga di `menu-data.js`,
+jalankan perintah di atas, lalu pastikan perubahannya benar-benar live:
+```bash
+curl -sL https://argoloro.vercel.app/menu-data.js | grep "nama menu yang diubah"
+```
 
 ### 2. Harga perlu dicocokkan ulang
 Dibaca dari foto menu. Yang mencurigakan: `Nut Frappe 36K` diapit dua item `38K`.
