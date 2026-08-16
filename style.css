@@ -91,6 +91,13 @@ section {
   position: absolute;
   inset: 0;
   animation: kenburns 30s ease-in-out infinite alternate;
+  /* Warna disampel langsung dari hero-1.jpg (6 pita horizontal).
+     Muncul seketika sebagai bayangan kasar foto, jadi tidak pernah
+     ada kotak hitam saat koneksi lambat. Biayanya nol byte —
+     tidak perlu base64 placeholder. */
+  background: linear-gradient(180deg,
+    #364A3E 0%, #5384AA 20%, #7E9CA5 40%,
+    #6F7259 60%, #533E2F 80%, #8D7457 100%);
 }
 
 /* <picture> defaultnya inline dan tingginya auto, jadi height:100%
