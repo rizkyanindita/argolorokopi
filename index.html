@@ -282,10 +282,15 @@
 
 <script src="script.js" defer></script>
 
-<!-- Vercel Web Analytics — ±1 KB, first-party, tanpa cookie sehingga tidak
+<!-- Vercel Web Analytics — ±2,5 KB, first-party, tanpa cookie sehingga tidak
      memerlukan banner persetujuan. Sengaja bukan Google Analytics: ±50 KB
      dari domain pihak ketiga akan membatalkan kerja optimasi 3G.
-     Hanya berfungsi di Vercel; di localhost berkas ini 404 dan diabaikan. -->
+     Hanya berfungsi di Vercel; di localhost berkas ini 404 dan diabaikan.
+     Blok window.va wajib untuk pemasangan HTML biasa — antrean panggilan
+     sebelum skrip utama selesai dimuat. -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
