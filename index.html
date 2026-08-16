@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<title>Argo Loro Kopi — Small Coffee Bar With Mountain View | Selo, Boyolali</title>
+<meta name="description" content="Argo Loro Kopi, Selo Boyolali. Ngopi dengan view Merapi &amp; Merbabu, buka setiap hari 9 pagi sampai 9 malam. Reservasi meja lewat WhatsApp.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Argo Loro Kopi — Small Coffee Bar With Mountain View">
+<meta property="og:description" content="Selo, Boyolali · Buka tiap hari 09.00–21.00 · View Merapi &amp; Merbabu">
+<meta property="og:image" content="images/hero-1.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Hanya bobot yang benar-benar dipakai CSS: Manrope 700/800, Inter 400/600/700.
+     Manrope 500 & Inter 500 dibuang (tak terpakai); Inter 700 ditambahkan
+     karena .textlink memerlukannya dan sebelumnya di-faux-bold browser. -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" type="image/avif"
+      href="images/opt/hero-1-960.avif"
+      imagesrcset="images/opt/hero-1-640.avif 640w, images/opt/hero-1-960.avif 960w, images/opt/hero-1-1080.avif 1080w"
+      imagesizes="(min-width: 700px) 720px, 100vw"
+      fetchpriority="high">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sticky CTA (muncul setelah blok aksi tergulir lewat) -->
+<a id="stickyCta" class="sticky-cta" href="https://wa.me/6281328256724?text=Halo%20Argo%20Loro%2C%20saya%20mau%20reservasi%20meja" target="_blank" rel="noopener">
+  <span class="sticky-cta-icon" aria-hidden="true">💬</span>
+  Reservasi via WhatsApp
+</a>
+
+<header>
+  <!-- ===== HERO =====
+       Satu foto, statis, besar. Ini shot yang menceritakan semuanya
+       sekaligus: bangunan + Merapi + pakis. Sengaja tidak dirotasi
+       supaya setiap pengunjung pasti melihatnya. -->
+  <section class="hero" id="hero">
+    <div class="hero-media">
+      <!-- AVIF dulu, WebP untuk browser tanpa AVIF, JPEG asli sebagai
+           jaring pengaman terakhir. Browser memilih sendiri lebarnya
+           lewat srcset — HP kecil tidak lagi mengunduh versi 1080px. -->
+      <picture>
+        <source type="image/avif"
+                srcset="images/opt/hero-1-640.avif 640w, images/opt/hero-1-960.avif 960w, images/opt/hero-1-1080.avif 1080w"
+                sizes="(min-width: 700px) 720px, 100vw">
+        <source type="image/webp"
+                srcset="images/opt/hero-1-640.webp 640w, images/opt/hero-1-960.webp 960w, images/opt/hero-1-1080.webp 1080w"
+                sizes="(min-width: 700px) 720px, 100vw">
+        <img src="images/hero-1.jpg"
+             alt="Bangunan Argo Loro Kopi berpintu terakota dengan Gunung Merapi di belakangnya, dibingkai pohon pakis"
+             loading="eager" fetchpriority="high" decoding="async"
+             width="1080" height="1439">
+      </picture>
+    </div>
+
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <!-- Status jam buka, dihitung real-time (WIB) oleh script.js -->
+    <div class="status status-hero" id="openStatus" role="status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="status-text" id="openStatusText">Memuat status…</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Selo · Boyolali · 1.700 mdpl</p>
+      <h1 class="hero-headline">Small coffee bar with mountain view</h1>
+      <p class="hero-subline">Ngopi di kaki Merapi</p>
+    </div>
+
+    <a class="hero-scrollcue" href="#actions" aria-label="Lihat aksi cepat">
+      <span aria-hidden="true">↓</span>
+    </a>
+  </section>
+</header>
+
+<main>
+
+  <!-- ===== IDENTITAS + STATUS ===== -->
+  <section class="identity" aria-label="Identitas dan status">
+    <h2 class="brandname">ARGOLORO Coffee</h2>
+    <p class="brandtag">Kopi &amp; pemandangan · Dusun II Samiran, Selo</p>
+
+    <div class="proof">
+      <a class="proof-item" href="https://maps.app.goo.gl/bcYDaJoT8vpgFmes9" target="_blank" rel="noopener">
+        <strong>Google Maps</strong>
+        <span>Baca ulasan</span>
+      </a>
+      <span class="proof-sep" aria-hidden="true"></span>
+      <a class="proof-item" href="https://www.instagram.com/argoloro_kopi/" target="_blank" rel="noopener">
+        <strong>@argoloro_kopi</strong>
+        <span>Lihat keseharian</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== AKSI UTAMA (thumb zone) ===== -->
+  <section class="actions" id="actions" aria-label="Aksi cepat">
+    <a class="action action-primary" href="https://wa.me/6281328256724?text=Halo%20Argo%20Loro%2C%20saya%20mau%20reservasi%20meja" target="_blank" rel="noopener">
+      <span class="action-icon" aria-hidden="true">💬</span>
+      <span class="action-copy">
+        <strong>Reservasi Meja</strong>
+        <small>Chat WhatsApp — dibalas jam operasional</small>
+      </span>
+      <span class="action-arrow" aria-hidden="true">→</span>
+    </a>
+
+    <div class="action-pair">
+      <a class="action action-ghost" href="https://maps.app.goo.gl/bcYDaJoT8vpgFmes9" target="_blank" rel="noopener">
+        <span class="action-icon" aria-hidden="true">📍</span>
+        <span class="action-copy">
+          <strong>Rute</strong>
+          <small>Buka Maps</small>
+        </span>
+      </a>
+      <button class="action action-ghost" type="button"
+              data-unavailable
+              data-unavailable-icon="☕"
+              data-unavailable-title="Menu belum tersedia">
+        <span class="action-icon" aria-hidden="true">☕</span>
+        <span class="action-copy">
+          <strong>Menu</strong>
+          <small>Daftar minuman</small>
+        </span>
+      </button>
+
+      <button class="action action-ghost" type="button"
+              data-unavailable
+              data-unavailable-icon="🏡"
+              data-unavailable-title="Argo Vila belum tersedia">
+        <span class="action-icon" aria-hidden="true">🏡</span>
+        <span class="action-copy">
+          <strong>Argo Vila</strong>
+          <small>Menginap di Selo</small>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== BENTO ===== -->
+  <section class="bento" aria-label="Tentang tempat ini">
+    <h2 class="section-title">Kenapa mampir ke sini</h2>
+
+    <div class="bento-grid">
+
+      <!-- Foto besar: spot view -->
+      <article class="tile tile-photo tile-tall reveal">
+        <picture>
+          <source type="image/avif"
+                  srcset="images/opt/hero-2-640.avif 640w, images/opt/hero-2-960.avif 960w"
+                  sizes="(min-width: 700px) 350px, 45vw">
+          <source type="image/webp"
+                  srcset="images/opt/hero-2-640.webp 640w, images/opt/hero-2-960.webp 960w"
+                  sizes="(min-width: 700px) 350px, 45vw">
+          <img src="images/opt/hero-2-640.webp" alt="Kursi tinggi menghadap lembah dan Gunung Merapi"
+               loading="lazy" decoding="async" width="1115" height="1486">
+        </picture>
+        <div class="tile-photo-body">
+          <span class="tile-kicker">Spot favorit</span>
+          <h3>Kursi tinggi<br>hadap Merapi</h3>
+          <p>Paling ramai difoto. Datang 06.00–09.00 saat kabut belum naik.</p>
+        </div>
+      </article>
+
+      <!-- Jam -->
+      <article class="tile tile-stat reveal">
+        <span class="tile-icon" aria-hidden="true">🕘</span>
+        <h3>09.00 – 21.00</h3>
+        <p>Buka setiap hari, termasuk tanggal merah</p>
+      </article>
+
+      <!-- WFC -->
+      <article class="tile tile-stat reveal">
+        <span class="tile-icon" aria-hidden="true">💻</span>
+        <h3>WFC friendly</h3>
+        <p>WiFi + banyak colokan, aman buat kerja seharian</p>
+      </article>
+
+      <!-- Foto lebar: interior -->
+      <article class="tile tile-photo tile-wide reveal">
+        <picture>
+          <source type="image/avif"
+                  srcset="images/opt/hero-3-640.avif 640w, images/opt/hero-3-960.avif 960w, images/opt/hero-3-1280.avif 1280w"
+                  sizes="(min-width: 700px) 350px, 92vw">
+          <source type="image/webp"
+                  srcset="images/opt/hero-3-640.webp 640w, images/opt/hero-3-960.webp 960w, images/opt/hero-3-1280.webp 1280w"
+                  sizes="(min-width: 700px) 350px, 92vw">
+          <img src="images/opt/hero-3-640.webp" alt="Ruang dalam berdinding kaca menghadap lereng gunung"
+               loading="lazy" decoding="async" width="1440" height="1916">
+        </picture>
+        <div class="tile-photo-body">
+          <span class="tile-kicker">Indoor</span>
+          <h3>Dinding kaca setinggi atap</h3>
+          <p>Tetap dapat view walau hujan atau angin gunung lagi kencang.</p>
+        </div>
+      </article>
+
+      <!-- Ketinggian -->
+      <article class="tile tile-stat reveal">
+        <span class="tile-icon" aria-hidden="true">⛰️</span>
+        <h3>1.700 mdpl</h3>
+        <p>Udara dingin sepanjang hari — bawa jaket tipis</p>
+      </article>
+
+      <!-- Akses -->
+      <article class="tile tile-stat reveal">
+        <span class="tile-icon" aria-hidden="true">🛵</span>
+        <h3>Jalur Selo</h3>
+        <p>Searah basecamp pendakian Merapi &amp; Merbabu</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== AGENDA =====
+       Isi list dirender oleh script.js dari objek FEATURED_EVENT dan
+       EVENTS di bagian atas file itu. Untuk menambah / mengubah acara,
+       edit di sana — tidak perlu menyentuh HTML ini. -->
+  <section class="events" id="events" aria-label="Agenda">
+    <h2 class="section-title">Agenda</h2>
+    <ul class="event-list" id="eventList"></ul>
+    <a class="textlink reveal" href="https://www.instagram.com/argoloro_kopi/" target="_blank" rel="noopener">
+      Jadwal terbaru ada di Instagram →
+    </a>
+  </section>
+
+  <!-- ===== LOKASI ===== -->
+  <section class="map-section" aria-label="Lokasi">
+    <h2 class="section-title">Cara ke sini</h2>
+    <div class="map-embed reveal">
+      <iframe
+        src="https://www.google.com/maps?q=Argoloro+Kopi,+Samiran,+Selo,+Boyolali&z=15&output=embed"
+        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Peta lokasi Argo Loro Kopi"></iframe>
+    </div>
+    <p class="address reveal">Dusun II, Samiran, Selo, Boyolali, Jawa Tengah</p>
+    <a class="action action-primary reveal" href="https://maps.app.goo.gl/bcYDaJoT8vpgFmes9" target="_blank" rel="noopener">
+      <span class="action-icon" aria-hidden="true">🧭</span>
+      <span class="action-copy">
+        <strong>Mulai Navigasi</strong>
+        <small>Buka di Google Maps</small>
+      </span>
+      <span class="action-arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">ARGOLORO</p>
+  <p>Selo, Boyolali · Buka tiap hari 09.00–21.00</p>
+  <p class="footer-fine">&copy; <span id="year"></span> Argo Loro Kopi</p>
+</footer>
+
+<!-- ===== OVERLAY: fitur belum tersedia ===== -->
+<div class="overlay" id="unavailableOverlay" hidden>
+  <div class="overlay-box" role="dialog" aria-modal="true" aria-labelledby="unavailableTitle">
+    <span class="overlay-icon" id="unavailableIcon" aria-hidden="true">☕</span>
+    <h3 id="unavailableTitle">Belum tersedia</h3>
+    <p>Saat ini tidak bisa dibuka :p , tunggu update berikutnya ya.</p>
+    <!-- <a class="overlay-alt" href="https://www.instagram.com/argoloro_kopi/" target="_blank" rel="noopener">
+      Sementara, cek Instagram kami →
+    </a> -->
+    <button class="overlay-close" type="button" id="unavailableClose">Tutup</button>
+  </div>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,820 @@
+/* ===== Tokens =====
+   Palet diambil dari foto asli: pintu terakota, dinding krem,
+   pakis hijau, langit biru Selo. */
+:root {
+  --terracotta: #C9461F;
+  --terracotta-deep: #9E3415;
+  --ember: #E8734A;
+  --cream: #FAF6EF;
+  --cream-2: #F1E9DC;
+  --sand: #E2D5C1;
+  --ink: #1B1917;
+  --ink-soft: #4A443E;
+  --fern: #2F5D3A;
+  --night: #100E0C;
+
+  /* Skala radius diperpanjang ke bawah, bukan diganti. --radius-xs
+     dipakai kartu agenda supaya terbaca lebih tegas dari kartu lain
+     tanpa melompat ke sudut 0 yang tidak ada di mana pun di halaman. */
+  --radius-xs: 4px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 1px 2px rgba(27,25,23,0.06), 0 4px 14px rgba(27,25,23,0.06);
+  --shadow-md: 0 10px 30px rgba(27,25,23,0.14);
+  --shadow-lift: 0 14px 40px rgba(201,70,31,0.22);
+
+  --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); }
+
+section {
+  padding: 32px 20px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+/* ===== Hero ===== */
+@keyframes kenburns {
+  0%   { transform: scale(1) translate3d(0,0,0); }
+  100% { transform: scale(1.14) translate3d(0,-1.5%,0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47,93,58,0.45); }
+  70%      { box-shadow: 0 0 0 7px rgba(47,93,58,0); }
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  /* Tinggi: foto ini adalah hook utamanya, jadi diberi ruang.
+     Tetap di bawah 100vh supaya aksi berikutnya tetap terasa dekat. */
+  height: 82vh;
+  min-height: 520px;
+  max-height: 760px;
+  overflow: hidden;
+  background: var(--night);
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  animation: kenburns 30s ease-in-out infinite alternate;
+}
+
+/* <picture> defaultnya inline dan tingginya auto, jadi height:100%
+   pada <img> di dalamnya kehilangan acuan. Dijadikan block seukuran
+   penuh supaya rantai tingginya tersambung lagi. */
+.hero-media picture { display: block; width: 100%; height: 100%; }
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 46% menjaga tiga elemen tetap masuk frame:
+     kanopi pakis, puncak Merapi, dan papan ARGOLORO. */
+  object-position: center 46%;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Dua lapis: gradien lembut + blok gelap di bawah supaya judul
+     tetap terbaca walau fotonya ramai (bangunan, pagar, orang). */
+  /* Ringan di area gunung, pekat di bawah. Bagian bawah foto berisi
+     pintu, pagar dan paving yang ramai — teks butuh alas sendiri. */
+  background:
+    linear-gradient(180deg,
+      rgba(16,14,12,0.46) 0%,
+      rgba(16,14,12,0.00) 22%,
+      rgba(16,14,12,0.10) 48%,
+      rgba(16,14,12,0.62) 72%,
+      rgba(16,14,12,0.93) 100%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 22px 46px;
+}
+
+.hero-eyebrow {
+  margin: 0 0 10px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ember);
+  /* Rasio crop berbeda tiap layar, jadi eyebrow bisa jatuh di atas
+     dinding terang. Bayangan menjaga kontras di semua kasus. */
+  text-shadow: 0 1px 10px rgba(16,14,12,0.85), 0 0 3px rgba(16,14,12,0.6);
+  animation: fadeUp 0.7s ease-out 0.05s both;
+}
+
+.hero-headline {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(28px, 8.4vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  max-width: 15ch;
+  color: #fff;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.4);
+  animation: fadeUp 0.8s ease-out 0.16s both;
+}
+
+.hero-subline {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: rgba(255,255,255,0.82);
+  animation: fadeUp 0.8s ease-out 0.28s both;
+}
+
+/* Petunjuk gulir — halus, hanya isyarat bahwa masih ada isi di bawah */
+@keyframes cueBob {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(5px); opacity: 1; }
+}
+
+.hero-scrollcue {
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  bottom: 22px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(16,14,12,0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 15px;
+  text-decoration: none;
+  animation: cueBob 2.4s ease-in-out infinite;
+}
+
+/* ===== Identitas ===== */
+.identity {
+  position: relative;
+  padding: 26px 20px 8px;
+  text-align: center;
+  z-index: 4;
+}
+
+.brandname {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.brandtag {
+  margin: 5px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* Status buka/tutup */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 7px 15px 7px 13px;
+  border-radius: 999px;
+  background: rgba(47,93,58,0.09);
+  color: var(--fern);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fern);
+  animation: pulseDot 2.2s ease-out infinite;
+}
+
+.status.is-closed {
+  background: rgba(201,70,31,0.09);
+  color: var(--terracotta-deep);
+}
+
+.status.is-closed .status-dot {
+  background: var(--terracotta);
+  animation: none;
+}
+
+/* Versi melayang di atas foto hero: kaca gelap, teks putih.
+   Warna dibawa oleh titiknya saja supaya tidak melawan foto. */
+.status-hero {
+  position: absolute;
+  z-index: 3;
+  top: 18px;
+  left: 20px;
+  margin-top: 0;
+  background: rgba(16,14,12,0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+@keyframes pulseDotLight {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(95,211,126,0.55); }
+  70%      { box-shadow: 0 0 0 7px rgba(95,211,126,0); }
+}
+
+.status-hero .status-dot {
+  background: #5FD37E;
+  animation: pulseDotLight 2.2s ease-out infinite;
+}
+
+.status-hero.is-closed {
+  background: rgba(16,14,12,0.42);
+  color: #fff;
+}
+
+.status-hero.is-closed .status-dot { background: var(--ember); }
+
+/* Social proof */
+.proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-decoration: none;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.proof-item strong {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.proof-sep {
+  width: 1px;
+  height: 26px;
+  background: var(--sand);
+}
+
+/* ===== Aksi ===== */
+.actions { padding-top: 26px; padding-bottom: 12px; }
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-height: 60px;
+  padding: 13px 16px;
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease,
+              background-color 180ms ease, border-color 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.action-icon { font-size: 21px; line-height: 1; flex-shrink: 0; }
+
+.action-copy { display: flex; flex-direction: column; min-width: 0; }
+
+.action-copy strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15.5px;
+  letter-spacing: -0.01em;
+}
+
+.action-copy small {
+  font-size: 12.5px;
+  opacity: 0.72;
+  line-height: 1.35;
+}
+
+.action-arrow { margin-left: auto; font-size: 17px; opacity: 0.65; flex-shrink: 0; }
+
+.action-primary {
+  background: var(--terracotta);
+  color: #fff;
+  box-shadow: var(--shadow-lift);
+}
+
+.action-ghost {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--sand);
+  box-shadow: var(--shadow-sm);
+}
+
+.action-pair {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 11px;
+}
+
+.action-pair .action {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  min-height: 96px;
+  padding: 13px 12px;
+  justify-content: center;
+}
+
+/* Kolomnya sempit (±115px di ponsel), jadi tipografinya dikecilkan
+   supaya label tidak pecah jadi tiga baris. */
+.action-pair .action-copy strong { font-size: 13.5px; line-height: 1.25; }
+.action-pair .action-copy small { font-size: 11px; }
+.action-pair .action-icon { font-size: 19px; }
+
+.action:active { transform: scale(0.985); }
+
+@media (hover: hover) and (pointer: fine) {
+  .action-primary:hover { background: var(--terracotta-deep); }
+  .action-ghost:hover { border-color: var(--terracotta); background: #fff; }
+  .action:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+}
+
+/* ===== Sticky CTA ===== */
+.sticky-cta {
+  position: fixed;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 52px;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  transform: translateY(90px);
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.sticky-cta.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (min-width: 640px) {
+  .sticky-cta { left: auto; right: 24px; width: auto; padding: 0 26px; }
+}
+
+/* ===== Bento ===== */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
+}
+
+.tile {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--sand);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Kartu statistik kecil */
+.tile-stat {
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tile-icon { font-size: 22px; line-height: 1; margin-bottom: 3px; }
+
+.tile-stat h3 {
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.tile-stat p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* Kartu foto */
+.tile-photo { border: none; background: var(--night); }
+
+.tile-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tile-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16,14,12,0) 30%, rgba(16,14,12,0.88) 100%);
+}
+
+.tile-photo-body {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px 15px;
+  color: #fff;
+}
+
+.tile-kicker {
+  align-self: flex-start;
+  margin-bottom: 8px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--terracotta);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.tile-photo-body h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.tile-photo-body p {
+  margin: 7px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.8);
+}
+
+/* Asimetri: ini yang bikin grid tidak terasa datar */
+.tile-tall { grid-row: span 2; min-height: 320px; }
+.tile-wide { grid-column: span 2; min-height: 200px; }
+
+/* ===== Agenda ===== */
+.event-list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--sand);
+  /* Garis vertikal tebal di kiri — pengganti bullet bulat lama.
+     Bentuknya lurus, jadi membawa kesan geometric tanpa perlu
+     memaksa sudut kartu jadi 0. */
+  border-left: 3px solid var(--sand);
+  border-radius: var(--radius-xs);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Event spesial: garis kiri dipertebal + diberi warna aksen, plus
+   label kotak di atas judul. Bedanya jelas, tapi tetap satu bahasa. */
+.event-featured {
+  border-left-width: 5px;
+  border-left-color: var(--terracotta);
+}
+
+.event-kicker {
+  display: inline-block;
+  margin-bottom: 7px;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Badge tanggal bujur sangkar */
+.event-day {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-xs);
+  background: var(--cream-2);
+  color: var(--terracotta-deep);
+  font-family: var(--font-display);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.event-featured .event-day {
+  background: var(--terracotta);
+  color: #fff;
+}
+
+.event-day-num { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
+.event-day-mon { margin-top: 3px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; }
+
+.event-body { min-width: 0; }
+
+.event-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.event-tagline {
+  margin: 0 0 3px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--terracotta);
+}
+
+.event-date {
+  margin: 3px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.event-caption {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.event-lineup {
+  list-style: none;
+  margin: 9px 0 0;
+  padding: 9px 0 0;
+  border-top: 1px solid var(--sand);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+/* Handle Instagram yang di-autolink di caption dan lineup */
+.event-lineup a,
+.event-caption a {
+  color: var(--terracotta);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201,70,31,0.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .event-lineup a:hover,
+  .event-caption a:hover { border-bottom-color: var(--terracotta); }
+}
+
+.textlink {
+  display: inline-block;
+  color: var(--terracotta);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .textlink:hover { text-decoration: underline; }
+}
+
+/* ===== Peta ===== */
+.map-embed {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--sand);
+  box-shadow: var(--shadow-sm);
+}
+
+.map-embed iframe { width: 100%; height: 260px; display: block; }
+
+.address {
+  margin: 14px 0 16px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* ===== Overlay ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(16,14,12,0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: fadeUp 220ms ease-out;
+}
+
+.overlay[hidden] { display: none; }
+
+.overlay-box {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 30px 24px 22px;
+  max-width: 330px;
+  width: 100%;
+  text-align: center;
+}
+
+.overlay-icon { font-size: 34px; display: block; margin-bottom: 10px; }
+
+.overlay-box h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.overlay-box p {
+  margin: 8px 0 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.overlay-alt {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--terracotta);
+  font-weight: 700;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+
+.overlay-close {
+  width: 100%;
+  min-height: 46px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .overlay-close:hover { background: var(--ink-soft); }
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  text-align: center;
+  padding: 34px 20px 104px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  border-top: 1px solid var(--sand);
+}
+
+.site-footer p { margin: 3px 0; }
+
+.footer-mark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  color: var(--terracotta);
+  margin-bottom: 8px !important;
+}
+
+.footer-fine { font-size: 11.5px; opacity: 0.65; margin-top: 10px !important; }
+
+/* ===== Scroll reveal ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ===== Desktop ===== */
+@media (min-width: 700px) {
+  /* Foto aslinya potret. Di layar lebar, hero dikurung ke lebar kolom
+     yang sama dengan isi halaman supaya komposisinya tidak terpotong
+     jadi pita tipis. */
+  .hero {
+    height: auto;
+    aspect-ratio: 4 / 5;
+    max-height: 760px;
+    max-width: 720px;
+    margin: 20px auto 0;
+    border-radius: var(--radius-lg);
+  }
+  .bento-grid { grid-template-columns: repeat(4, 1fr); }
+  .tile-tall { grid-column: span 2; grid-row: span 2; min-height: 380px; }
+  .tile-wide { grid-column: span 2; }
+  .tile-stat { grid-column: span 1; }
+  .map-embed iframe { height: 340px; }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { transition: none; opacity: 1; transform: none; }
+  .hero-media { animation: none; }
+  .hero-eyebrow, .hero-headline, .hero-subline { animation: none; opacity: 1; transform: none; }
+  .status-dot, .hero-scrollcue { animation: none; }
+  .overlay { animation: none; }
+  .action, .sticky-cta { transition: none; }
+}

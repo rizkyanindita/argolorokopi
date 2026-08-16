@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import playwright\")",
+      "Bash(npx --yes playwright --version)",
+      "Bash(npx --yes playwright install chromium --with-deps)",
+      "Bash(gzip -c index.html)",
+      "Bash(gzip -c style.css)",
+      "Bash(gzip -c script.js)",
+      "Bash(lsof -ti:8934 -sTCP:LISTEN)",
+      "Bash(find \"/Users/64664/Downloads/Coffee Shop Menu Webapp\" -iname \"*.jpg\" -o -iname \"*.png\" -o -iname \"*.jpeg\" -o -iname \"*.webp\" 2>/dev/null | head -40; echo \"---caches nodejs---\"; find /Users/64664/Library/Caches/claude-cli-nodejs -iname \"*.png\" -newer /Users/64664/argoloro/style.css 2>/dev/null | head -20)",
+      "Read(//Users/64664/Downloads/Coffee Shop Menu Webapp/**)",
+      "Bash(node -e ' *)",
+      "Read(//Users/64664/**)",
+      "Bash(xargs -I{} stat -f \"%m {}\" {})",
+      "WebSearch",
+      "WebFetch(domain:taap.bio)",
+      "WebFetch(domain:replug.io)",
+      "Bash(npx playwright *)",
+      "Bash(node shot.js)",
+      "Bash(node desk.js)",
+      "Bash(echo \"--- sisa referensi: $? \\(1 = bersih\\) ---\")",
+      "Bash(avifenc --help)",
+      "Bash(node perf.js)"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}
