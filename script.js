@@ -194,6 +194,91 @@
     ctaObserver.observe(actionsSection);
   }
 
+  /* ===== Peta: dimuat saat diminta =====
+     Iframe baru dibuat setelah tombol ditekan, jadi ±165 KB skrip
+     Google Maps tidak pernah menyentuh kunjungan pertama. */
+  var mapLoad = document.getElementById("mapLoad");
+  var mapEmbed = document.getElementById("mapEmbed");
+
+  if (mapLoad && mapEmbed) {
+    mapLoad.addEventListener("click", function () {
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.google.com/maps?q=Argoloro+Kopi,+Samiran,+Selo,+Boyolali&z=15&output=embed";
+      frame.width = "100%";
+      frame.height = "300";
+      frame.style.border = "0";
+      frame.setAttribute("allowfullscreen", "");
+      frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+      frame.title = "Peta lokasi Argo Loro Kopi";
+      mapEmbed.innerHTML = "";
+      mapEmbed.appendChild(frame);
+    });
+  }
+
+  /* ===== Gambar bento: benar-benar ditunda =====
+     loading="lazy" saja tidak cukup — Chromium tetap mengunduhnya di
+     awal dan berebut bandwidth dengan hero. srcset baru dipasang
+     setelah tile-nya mendekati layar. */
+  var deferred = Array.prototype.slice.call(
+    document.querySelectorAll("[data-srcset], [data-src]")
+  );
+
+  function loadDeferred(node) {
+    var ss = node.getAttribute("data-srcset");
+    if (ss) {
+      node.setAttribute("srcset", ss);
+      node.removeAttribute("data-srcset");
+    }
+    var src = node.getAttribute("data-src");
+    if (src) {
+      node.setAttribute("src", src);
+      node.removeAttribute("data-src");
+    }
+  }
+
+  // Observer baru dinyalakan setelah foto hero selesai diunduh. Tanpa
+  // penundaan ini, tile bento masuk jangkauan rootMargin sejak awal dan
+  // kembali berebut bandwidth dengan hero di koneksi lambat.
+  function whenHeroReady(cb) {
+    var heroImg = document.querySelector(".hero-media img");
+    if (!heroImg || heroImg.complete) return cb();
+
+    var done = false;
+    function once() { if (!done) { done = true; cb(); } }
+
+    heroImg.addEventListener("load", once);
+    heroImg.addEventListener("error", once);
+    window.setTimeout(once, 5000); // jaring pengaman kalau hero gagal
+  }
+
+  if (deferred.length) {
+    if ("IntersectionObserver" in window) {
+      var imgObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            // <source> tidak bisa diobservasi, jadi yang diamati <picture>
+            var scope = entry.target;
+            Array.prototype.forEach.call(
+              scope.querySelectorAll("[data-srcset], [data-src]"),
+              loadDeferred
+            );
+            imgObserver.unobserve(scope);
+          });
+        },
+        { rootMargin: "300px 0px" }
+      );
+
+      whenHeroReady(function () {
+        document.querySelectorAll(".tile-photo picture").forEach(function (pic) {
+          imgObserver.observe(pic);
+        });
+      });
+    } else {
+      deferred.forEach(loadDeferred);
+    }
+  }
+
   /* ===== Render agenda =====
      Sengaja dijalankan SEBELUM blok scroll-reveal di bawah, supaya
      kartu sudah ada di DOM waktu observer menyapu ".reveal".

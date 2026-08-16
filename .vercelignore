@@ -1,0 +1,12 @@
+# Cadangan lokal — jangan ikut ke server
+.backup-before-redesign
+
+# Foto sumber untuk hero-2 & hero-3. Halaman hanya memakai varian
+# di images/opt/, tapi file ini disimpan lokal untuk membuat ulang
+# varian kalau kualitas atau ukurannya perlu diubah.
+images/hero-2.jpg
+images/hero-3.jpg
+
+# Perkakas editor
+.claude
+.DS_Store

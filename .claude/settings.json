@@ -24,7 +24,14 @@
       "Bash(node perf.js)",
       "Bash(ffmpeg -v quiet -i images/hero-1.jpg -vf scale=1:6 -f rawvideo -pix_fmt rgb24 -)",
       "Bash(grep -v '^$')",
-      "Bash(awk '{printf \"  pita %d: #%02X%02X%02X\\\\n\", NR, $1,$2,$3}')"
+      "Bash(awk '{printf \"  pita %d: #%02X%02X%02X\\\\n\", NR, $1,$2,$3}')",
+      "Bash(python3 -)",
+      "Bash(node slow2.js)",
+      "Bash(node slow.js)",
+      "Bash(command -v vercel)",
+      "Bash(vercel --version)",
+      "Bash(npx --yes vercel@latest whoami)",
+      "Bash(npx --yes vercel@latest deploy --yes)"
     ],
     "defaultMode": "bypassPermissions"
   }

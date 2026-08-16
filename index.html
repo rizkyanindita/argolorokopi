@@ -17,10 +17,18 @@
 <!-- Hanya bobot yang benar-benar dipakai CSS: Manrope 700/800, Inter 400/600/700.
      Manrope 500 & Inter 500 dibuang (tak terpakai); Inter 700 ditambahkan
      karena .textlink memerlukannya dan sebelumnya di-faux-bold browser. -->
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- media="print" lalu diaktifkan saat onload: browser mengunduhnya dengan
+     prioritas rendah sehingga tidak berebut jalur dengan foto hero. Teks
+     tetap terbaca sejak detik pertama memakai font sistem, lalu berganti
+     mulus — perilaku yang sama seperti display=swap. -->
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
 <link rel="preload" as="image" type="image/avif"
       href="images/opt/hero-1-960.avif"
-      imagesrcset="images/opt/hero-1-640.avif 640w, images/opt/hero-1-960.avif 960w, images/opt/hero-1-1080.avif 1080w"
+      imagesrcset="images/opt/hero-1-640.avif 640w, images/opt/hero-1-800.avif 800w, images/opt/hero-1-960.avif 960w, images/opt/hero-1-1080.avif 1080w"
       imagesizes="(min-width: 700px) 720px, 100vw"
       fetchpriority="high">
 <link rel="stylesheet" href="style.css">
@@ -45,10 +53,10 @@
            lewat srcset — HP kecil tidak lagi mengunduh versi 1080px. -->
       <picture>
         <source type="image/avif"
-                srcset="images/opt/hero-1-640.avif 640w, images/opt/hero-1-960.avif 960w, images/opt/hero-1-1080.avif 1080w"
+                srcset="images/opt/hero-1-640.avif 640w, images/opt/hero-1-800.avif 800w, images/opt/hero-1-960.avif 960w, images/opt/hero-1-1080.avif 1080w"
                 sizes="(min-width: 700px) 720px, 100vw">
         <source type="image/webp"
-                srcset="images/opt/hero-1-640.webp 640w, images/opt/hero-1-960.webp 960w, images/opt/hero-1-1080.webp 1080w"
+                srcset="images/opt/hero-1-640.webp 640w, images/opt/hero-1-800.webp 800w, images/opt/hero-1-960.webp 960w, images/opt/hero-1-1080.webp 1080w"
                 sizes="(min-width: 700px) 720px, 100vw">
         <img src="images/hero-1.jpg"
              alt="Bangunan Argo Loro Kopi berpintu terakota dengan Gunung Merapi di belakangnya, dibingkai pohon pakis"
@@ -150,12 +158,12 @@
       <article class="tile tile-photo tile-tall reveal">
         <picture>
           <source type="image/avif"
-                  srcset="images/opt/hero-2-640.avif 640w, images/opt/hero-2-960.avif 960w"
+                  data-srcset="images/opt/hero-2-640.avif 640w, images/opt/hero-2-960.avif 960w"
                   sizes="(min-width: 700px) 350px, 45vw">
           <source type="image/webp"
-                  srcset="images/opt/hero-2-640.webp 640w, images/opt/hero-2-960.webp 960w"
+                  data-srcset="images/opt/hero-2-640.webp 640w, images/opt/hero-2-960.webp 960w"
                   sizes="(min-width: 700px) 350px, 45vw">
-          <img src="images/opt/hero-2-640.webp" alt="Kursi tinggi menghadap lembah dan Gunung Merapi"
+          <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 3 4%22%3E%3C/svg%3E" data-src="images/opt/hero-2-640.webp" alt="Kursi tinggi menghadap lembah dan Gunung Merapi"
                loading="lazy" decoding="async" width="1115" height="1486">
         </picture>
         <div class="tile-photo-body">
@@ -183,12 +191,12 @@
       <article class="tile tile-photo tile-wide reveal">
         <picture>
           <source type="image/avif"
-                  srcset="images/opt/hero-3-640.avif 640w, images/opt/hero-3-960.avif 960w, images/opt/hero-3-1280.avif 1280w"
+                  data-srcset="images/opt/hero-3-640.avif 640w, images/opt/hero-3-960.avif 960w, images/opt/hero-3-1280.avif 1280w"
                   sizes="(min-width: 700px) 350px, 92vw">
           <source type="image/webp"
-                  srcset="images/opt/hero-3-640.webp 640w, images/opt/hero-3-960.webp 960w, images/opt/hero-3-1280.webp 1280w"
+                  data-srcset="images/opt/hero-3-640.webp 640w, images/opt/hero-3-960.webp 960w, images/opt/hero-3-1280.webp 1280w"
                   sizes="(min-width: 700px) 350px, 92vw">
-          <img src="images/opt/hero-3-640.webp" alt="Ruang dalam berdinding kaca menghadap lereng gunung"
+          <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 3 4%22%3E%3C/svg%3E" data-src="images/opt/hero-3-640.webp" alt="Ruang dalam berdinding kaca menghadap lereng gunung"
                loading="lazy" decoding="async" width="1440" height="1916">
         </picture>
         <div class="tile-photo-body">
@@ -230,12 +238,18 @@
   <!-- ===== LOKASI ===== -->
   <section class="map-section" aria-label="Lokasi">
     <h2 class="section-title">Cara ke sini</h2>
-    <div class="map-embed reveal">
-      <iframe
-        src="https://www.google.com/maps?q=Argoloro+Kopi,+Samiran,+Selo,+Boyolali&z=15&output=embed"
-        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Peta lokasi Argo Loro Kopi"></iframe>
+    <!-- Fasad peta: iframe Google Maps menarik ±165 KB JavaScript dari
+         server pihak ketiga dan tetap termuat di awal meski loading="lazy",
+         berebut jalur dengan foto hero. Iframe baru disisipkan script.js
+         saat tombol ini ditekan. -->
+    <div class="map-embed reveal" id="mapEmbed">
+      <button class="map-facade" type="button" id="mapLoad">
+        <span class="map-facade-icon" aria-hidden="true">🗺️</span>
+        <span class="map-facade-copy">
+          <strong>Tampilkan peta</strong>
+          <small>Dimuat hanya saat dibutuhkan — hemat kuota</small>
+        </span>
+      </button>
     </div>
     <p class="address reveal">Dusun II, Samiran, Selo, Boyolali, Jawa Tengah</p>
     <a class="action action-primary reveal" href="https://maps.app.goo.gl/bcYDaJoT8vpgFmes9" target="_blank" rel="noopener">
