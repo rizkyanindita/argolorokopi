@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<title>Menu — Argo Loro Coffee &amp; Eatery | Selo, Boyolali</title>
+<meta name="description" content="Daftar menu lengkap Argo Loro Coffee &amp; Eatery, Selo Boyolali. Kopi, wedangan, pizza, rice bowl, dan makanan lain beserta harganya.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Menu — Argo Loro Coffee &amp; Eatery">
+<meta property="og:description" content="111 menu · Kopi, wedangan, pizza, rice bowl, mie, pasta">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
+<!-- style.css yang sama dengan beranda: sudah ter-cache bagi pengunjung
+     yang datang dari sana, jadi halaman ini terasa langsung terbuka. -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="page-menu">
+
+<!-- Seluruh blok navigasi menempel sebagai satu kesatuan supaya
+     tinggi stickynya pasti dan tidak perlu ditebak di CSS. -->
+<div class="menunav" id="menunav">
+
+  <header class="menubar">
+    <a class="menubar-back" href="index.html" aria-label="Kembali ke beranda">←</a>
+    <div class="menubar-title">
+      <strong>Menu</strong>
+      <small>Argo Loro · coffee &amp; eatery</small>
+    </div>
+    <a class="menubar-wa" href="https://wa.me/6281328256724?text=Halo%20Argo%20Loro%2C%20saya%20mau%20pesan"
+       target="_blank" rel="noopener">Pesan</a>
+  </header>
+
+  <!-- Pencarian -->
+  <div class="searchbar">
+    <span class="searchbar-icon" aria-hidden="true">🔍</span>
+    <input type="search" id="menuSearch" class="searchbar-input"
+           placeholder="Cari menu — mis. latte, mie, pizza…"
+           autocomplete="off" aria-label="Cari menu">
+    <button type="button" class="searchbar-clear" id="searchClear" aria-label="Hapus pencarian" hidden>×</button>
+  </div>
+
+  <!-- Tab tingkat atas -->
+  <div class="segmented" id="segmented" role="tablist" aria-label="Jenis menu">
+    <button class="seg is-active" type="button" role="tab" aria-selected="true" data-grup="minuman">
+      Minuman <span class="seg-count" id="countMinuman"></span>
+    </button>
+    <button class="seg" type="button" role="tab" aria-selected="false" data-grup="makanan">
+      Makanan <span class="seg-count" id="countMakanan"></span>
+    </button>
+  </div>
+
+  <!-- Chip kategori + tombol buka semua kategori -->
+  <div class="chips">
+    <div class="chips-scroll" id="chipsScroll"></div>
+    <button class="chips-all" type="button" id="chipsAll" aria-label="Lihat semua kategori">☰</button>
+  </div>
+
+</div>
+
+<main class="menu-main">
+  <p class="search-status" id="searchStatus" hidden></p>
+  <div id="menuMount"></div>
+
+  <p class="menu-empty" id="menuEmpty" hidden>
+    Menu tidak ditemukan.<br>
+    <small>Coba kata lain, atau tanyakan langsung lewat WhatsApp.</small>
+  </p>
+
+  <p class="menu-note">
+    Harga dalam ribuan rupiah. Sewaktu-waktu dapat berubah —
+    konfirmasi saat memesan.
+  </p>
+</main>
+
+<!-- Panel semua kategori: 19 kategori terlalu panjang untuk digulir
+     mendatar, jadi bisa dilihat sekaligus sebagai kisi. -->
+<div class="catsheet" id="catSheet" hidden>
+  <div class="catsheet-panel" role="dialog" aria-modal="true" aria-label="Semua kategori">
+    <div class="catsheet-head">
+      <strong>Semua kategori</strong>
+      <button type="button" class="catsheet-close" id="catSheetClose" aria-label="Tutup">×</button>
+    </div>
+    <div class="catsheet-body" id="catSheetBody"></div>
+  </div>
+</div>
+
+<a class="sticky-cta is-visible" href="https://wa.me/6281328256724?text=Halo%20Argo%20Loro%2C%20saya%20mau%20pesan"
+   target="_blank" rel="noopener">
+  <span aria-hidden="true">💬</span>
+  Pesan via WhatsApp
+</a>
+
+<script src="menu-data.js" defer></script>
+<script src="menu.js" defer></script>
+</body>
+</html>

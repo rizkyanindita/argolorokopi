@@ -31,7 +31,10 @@
       "Bash(command -v vercel)",
       "Bash(vercel --version)",
       "Bash(npx --yes vercel@latest whoami)",
-      "Bash(npx --yes vercel@latest deploy --yes)"
+      "Bash(npx --yes vercel@latest deploy --yes)",
+      "mcp__claude_ai_Vercel__get_project_deployment_protection",
+      "Bash(npx --yes vercel@latest inspect argoloro-8vv9jkxcv-rizky-aninditas-projects.vercel.app)",
+      "Bash(grep -iA6 \"alias\\\\|domain\")"
     ],
     "defaultMode": "bypassPermissions"
   }

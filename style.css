@@ -862,4 +862,463 @@ section {
   .status-dot, .hero-scrollcue { animation: none; }
   .overlay { animation: none; }
   .action, .sticky-cta { transition: none; }
+  .chip { transition: none; }
+}
+
+/* ============================================================
+   HALAMAN MENU
+   Memakai token yang sama dengan beranda. Digabung ke style.css
+   (bukan berkas terpisah) supaya pengunjung yang datang dari
+   beranda tidak perlu request CSS kedua — sudah ter-cache.
+   ============================================================ */
+
+.page-menu { background: var(--cream); }
+
+/* Seluruh blok navigasi menempel sebagai satu kesatuan. Tingginya
+   diukur JS lewat getBoundingClientRect, jadi menambah baris baru
+   tidak perlu menyetel ulang offset di mana pun. */
+.menunav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(250,246,239,0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--sand);
+}
+
+/* Saat mencari, tab & chip disembunyikan — hasil pencarian
+   menembus batas grup, jadi menyorot salah satunya menyesatkan. */
+.menunav.is-searching .segmented,
+.menunav.is-searching .chips { display: none; }
+
+/* ===== Bar atas ===== */
+.menubar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px 10px;
+}
+
+.menubar-back {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  background: #fff;
+  border: 1px solid var(--sand);
+  color: var(--ink);
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.menubar-title { display: flex; flex-direction: column; min-width: 0; }
+
+.menubar-title strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.menubar-title small {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.menubar-wa {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+/* ===== Chip kategori =====
+   18 kategori terlalu banyak untuk digulir buta. Baris ini menempel
+   di bawah bar dan menyorot kategori yang sedang dibaca. */
+/* ===== Pencarian ===== */
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 16px 10px;
+  padding: 0 12px;
+  height: 42px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--sand);
+}
+
+.searchbar-icon { font-size: 13px; opacity: 0.6; flex-shrink: 0; }
+
+.searchbar-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  /* 16px wajib: di iOS, input di bawah 16px memicu zoom otomatis
+     saat difokuskan dan tata letak jadi melompat. */
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.searchbar-input::-webkit-search-cancel-button { display: none; }
+.searchbar-input::placeholder { color: var(--ink-soft); opacity: 0.7; font-size: 14px; }
+
+.searchbar-clear {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream-2);
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ===== Tab tingkat atas ===== */
+.segmented {
+  display: flex;
+  gap: 4px;
+  margin: 0 16px 10px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--cream-2);
+}
+
+.seg {
+  flex: 1 1 0;
+  min-height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.seg.is-active {
+  background: var(--terracotta);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.seg-count {
+  font-weight: 600;
+  font-size: 11px;
+  opacity: 0.72;
+  margin-left: 3px;
+}
+
+/* ===== Chip kategori ===== */
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px 10px;
+}
+
+.chips-scroll {
+  display: flex;
+  gap: 7px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chips-all {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chips-scroll::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.chip.is-active {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #fff;
+}
+
+/* ===== Isi menu ===== */
+.menu-main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 16px 120px;
+}
+
+.menu-grup {
+  margin: 34px 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.menu-grup:first-child { margin-top: 20px; }
+
+.menu-kat { scroll-margin-top: 116px; padding: 18px 0 4px; }
+
+.menu-kat-head {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-bottom: 12px;
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--terracotta);
+}
+
+.menu-kat-head h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  color: var(--terracotta);
+  text-transform: uppercase;
+}
+
+.menu-kat-note {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.menu-list { list-style: none; margin: 0; padding: 0; }
+
+/* Baris item: nama — titik-titik — harga. Titik dibuat dari
+   border dashed pada elemen yang melar, bukan karakter berulang,
+   supaya selalu rata di lebar layar apa pun. */
+.menu-item {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(226,213,193,0.55);
+}
+
+.menu-item:last-child { border-bottom: none; }
+
+.menu-item-name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.menu-item-ket {
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.menu-dot {
+  flex: 1 1 auto;
+  min-width: 14px;
+  border-bottom: 1px dotted var(--sand);
+  transform: translateY(-3px);
+}
+
+.menu-item-price {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+  color: var(--terracotta);
+}
+
+.menu-fav {
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  background: var(--cream-2);
+  color: var(--terracotta-deep);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.menu-note {
+  margin: 40px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--sand);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ===== Status pencarian & keadaan kosong ===== */
+.search-status {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.menu-empty {
+  margin: 48px 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.menu-empty small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+/* ===== Panel semua kategori ===== */
+.catsheet {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(16,14,12,0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.catsheet[hidden] { display: none; }
+
+.catsheet-panel {
+  width: 100%;
+  max-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  animation: sheetUp 240ms ease-out;
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.catsheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid var(--sand);
+}
+
+.catsheet-head strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.catsheet-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream-2);
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.catsheet-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 16px 18px 26px;
+  overflow-y: auto;
+}
+
+.catsheet-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 13px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.catsheet-count {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 700px) {
+  /* Dua lajur di layar lebar — 111 item terlalu panjang untuk satu lajur */
+  .menu-list { columns: 2; column-gap: 34px; }
+  .menu-item { break-inside: avoid; }
+  .catsheet { align-items: center; justify-content: center; padding: 24px; }
+  .catsheet-panel { max-width: 520px; border-radius: var(--radius-lg); }
+  .catsheet-body { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catsheet-panel { animation: none; }
+  .seg { transition: none; }
 }
