@@ -1348,3 +1348,120 @@ section {
   .catsheet-panel { animation: none; }
   .seg { transition: none; }
 }
+
+/* ===== RUTE & FAQ (beranda) =====
+   Ditambahkan untuk memberi Google isi yang bisa diperingkatkan.
+   Semua warna memakai token yang sudah ada — tidak ada nilai hex baru,
+   supaya palet tetap satu sumber. */
+
+.route-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: #fff;
+}
+
+.route-list li {
+  display: grid;
+  /* Kolom waktu dibuat auto supaya "±2,5 jam" tidak terpotong,
+     sementara nama kota mengisi sisa ruang. */
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--cream-2);
+}
+
+.route-list li:last-child { border-bottom: 0; }
+
+.route-from {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.route-time {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--terracotta);
+  font-variant-numeric: tabular-nums;
+}
+
+.route-list small {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.route-note {
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  padding: 15px 44px 15px 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  position: relative;
+  /* Segitiga bawaan dibuang di kedua mesin render, diganti tanda + sendiri
+     supaya posisinya konsisten dan ikut warna terakota. */
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: "+";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--terracotta);
+  transition: transform 0.18s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: -2px;
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 16px 16px;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.faq-item p a {
+  color: var(--terracotta);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item summary::after { transition: none; }
+}
