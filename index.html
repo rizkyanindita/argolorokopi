@@ -79,6 +79,8 @@
   "hasMenu": "https://argoloro.vercel.app/menu.html",
   "sameAs": [
     "https://www.instagram.com/argoloro_kopi/",
+    "https://www.tiktok.com/@argolorokopi",
+    "https://www.facebook.com/p/Argo-Loro-Kopi-100083230483726/",
     "https://maps.app.goo.gl/bcYDaJoT8vpgFmes9"
   ]
 }
@@ -93,6 +95,51 @@
   "alternateName": "Argoloro",
   "inLanguage": "id-ID",
   "publisher": { "@id": "https://argoloro.vercel.app/#business" }
+}
+</script>
+
+<!-- FAQPage: setiap pertanyaan & jawaban di sini WAJIB muncul apa adanya
+     di badan halaman (bagian #faq). Skema yang menjanjikan jawaban yang
+     tidak ada di layar melanggar pedoman Google dan bisa membuat SELURUH
+     data terstruktur situs diabaikan. Ubah salah satu = ubah keduanya. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://argoloro.vercel.app/#faq",
+  "inLanguage": "id-ID",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Jam buka Argo Loro Kopi?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Buka setiap hari pukul 09.00 sampai 21.00 WIB, termasuk akhir pekan dan hari libur." }
+    },
+    {
+      "@type": "Question",
+      "name": "Berapa kisaran harganya?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Menu dibanderol mulai 17K sampai 60K, dengan rata-rata di kisaran 28K. Ada 111 menu: kopi, wedangan, pizza, rice bowl, mie, dan pasta." }
+    },
+    {
+      "@type": "Question",
+      "name": "Perlu reservasi dulu?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tidak wajib, datang langsung juga bisa. Tapi kalau datang rombongan atau di akhir pekan, lebih aman pesan meja dulu lewat WhatsApp supaya tidak menunggu." }
+    },
+    {
+      "@type": "Question",
+      "name": "Kapan Gunung Merapi paling jelas terlihat?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Pagi hari, terutama sebelum pukul 10.00. Menjelang siang kabut sering naik dan menutup puncak. Kalau tujuan utamanya pemandangan, datanglah sepagi mungkin setelah buka." }
+    },
+    {
+      "@type": "Question",
+      "name": "Enak buat kerja atau bawa laptop?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Bisa. Ada kursi tinggi menghadap Merapi dan dinding kaca setinggi atap, jadi tempatnya terang sepanjang hari." }
+    },
+    {
+      "@type": "Question",
+      "name": "Lokasinya di mana persisnya?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Dusun II, Samiran, Selo, Boyolali, Jawa Tengah — di ketinggian sekitar 1.700 mdpl, tepat di jalur Solo–Selo–Magelang yang memisahkan Gunung Merapi dan Merbabu." }
+    }
+  ]
 }
 </script>
 </head>
@@ -320,6 +367,63 @@
       </span>
       <span class="action-arrow" aria-hidden="true">→</span>
     </a>
+  </section>
+
+  <!-- ===== RUTE =====
+       Ditambahkan untuk SEO: pengunjung mencari "argo loro dari solo"
+       atau "selo dari jogja berapa jam", dan sebelumnya tidak ada satu
+       kata pun di halaman ini yang menjawabnya. Tabel, bukan paragraf,
+       karena yang dicari orang cuma satu angka. -->
+  <section class="routes" id="rute" aria-label="Rute menuju lokasi">
+    <h2 class="section-title">Berapa lama dari kota Anda</h2>
+    <ul class="route-list reveal">
+      <li><span class="route-from">Boyolali kota</span><span class="route-time">&plusmn;45 menit</span><small>&plusmn;22 km lewat Cepogo</small></li>
+      <li><span class="route-from">Solo</span><span class="route-time">&plusmn;1,5 jam</span><small>&plusmn;45 km lewat Boyolali &ndash; Cepogo</small></li>
+      <li><span class="route-from">Magelang</span><span class="route-time">&plusmn;1 jam</span><small>&plusmn;35 km lewat Ketep</small></li>
+      <li><span class="route-from">Yogyakarta</span><span class="route-time">&plusmn;2 jam</span><small>&plusmn;60 km lewat Ketep Pass</small></li>
+      <li><span class="route-from">Semarang</span><span class="route-time">&plusmn;2,5 jam</span><small>&plusmn;75 km lewat Salatiga &ndash; Boyolali</small></li>
+    </ul>
+    <p class="route-note reveal">Perkiraan waktu tempuh normal dengan mobil. Jalur Selo berkelok dan menanjak &mdash; tambah waktu kalau berkabut atau saat akhir pekan.</p>
+  </section>
+
+  <!-- ===== FAQ =====
+       <details> bawaan browser: buka-tutup tanpa satu baris JS pun,
+       dan sudah aksesibel dari sananya. Teks di sini WAJIB sama persis
+       dengan JSON-LD FAQPage di <head> — Google menganggap skema yang
+       tidak terlihat di halaman sebagai pelanggaran. Kalau mengubah
+       salah satu, ubah keduanya. -->
+  <section class="faq" id="faq" aria-label="Pertanyaan yang sering ditanyakan">
+    <h2 class="section-title">Yang sering ditanyakan</h2>
+
+    <details class="faq-item reveal">
+      <summary>Jam buka Argo Loro Kopi?</summary>
+      <p>Buka setiap hari pukul 09.00 sampai 21.00 WIB, termasuk akhir pekan dan hari libur.</p>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>Berapa kisaran harganya?</summary>
+      <p>Menu dibanderol mulai 17K sampai 60K, dengan rata-rata di kisaran 28K. Ada 111 menu: kopi, wedangan, pizza, rice bowl, mie, dan pasta. Daftar lengkap beserta harganya ada di <a href="menu.html">halaman menu</a>.</p>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>Perlu reservasi dulu?</summary>
+      <p>Tidak wajib, datang langsung juga bisa. Tapi kalau datang rombongan atau di akhir pekan, lebih aman pesan meja dulu lewat WhatsApp supaya tidak menunggu.</p>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>Kapan Gunung Merapi paling jelas terlihat?</summary>
+      <p>Pagi hari, terutama sebelum pukul 10.00. Menjelang siang kabut sering naik dan menutup puncak. Kalau tujuan utamanya pemandangan, datanglah sepagi mungkin setelah buka.</p>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>Enak buat kerja atau bawa laptop?</summary>
+      <p>Bisa. Ada kursi tinggi menghadap Merapi dan dinding kaca setinggi atap, jadi tempatnya terang sepanjang hari.</p>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>Lokasinya di mana persisnya?</summary>
+      <p>Dusun II, Samiran, Selo, Boyolali, Jawa Tengah &mdash; di ketinggian sekitar 1.700 mdpl, tepat di jalur Solo&ndash;Selo&ndash;Magelang yang memisahkan Gunung Merapi dan Merbabu.</p>
+    </details>
   </section>
 
 </main>
