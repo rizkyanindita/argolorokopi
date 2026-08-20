@@ -7,9 +7,16 @@
 <title>Menu — Argo Loro Coffee &amp; Eatery | Selo, Boyolali</title>
 <meta name="description" content="Daftar menu lengkap Argo Loro Coffee &amp; Eatery, Selo Boyolali. Kopi, wedangan, pizza, rice bowl, dan makanan lain beserta harganya.">
 
+<link rel="canonical" href="https://argoloro.vercel.app/menu.html">
+
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Argo Loro">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://argoloro.vercel.app/menu.html">
 <meta property="og:title" content="Menu — Argo Loro Coffee &amp; Eatery">
 <meta property="og:description" content="111 menu · Kopi, wedangan, pizza, rice bowl, mie, pasta">
+<meta property="og:image" content="https://argoloro.vercel.app/images/hero-1.jpg">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +28,35 @@
 <!-- style.css yang sama dengan beranda: sudah ter-cache bagi pengunjung
      yang datang dari sana, jadi halaman ini terasa langsung terbuka. -->
 <link rel="stylesheet" href="style.css">
+
+<!-- Halaman ini menunjuk balik ke entitas usaha di beranda lewat @id yang sama,
+     jadi Google membaca keduanya sebagai satu tempat, bukan dua. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "@id": "https://argoloro.vercel.app/menu.html#menu",
+  "name": "Menu Argo Loro Coffee & Eatery",
+  "inLanguage": "id-ID",
+  "url": "https://argoloro.vercel.app/menu.html",
+  "provider": {
+    "@type": "CafeOrCoffeeShop",
+    "@id": "https://argoloro.vercel.app/#business",
+    "name": "Argo Loro",
+    "url": "https://argoloro.vercel.app/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Argo Loro", "item": "https://argoloro.vercel.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Menu", "item": "https://argoloro.vercel.app/menu.html" }
+  ]
+}
+</script>
 </head>
 <body class="page-menu">
 

@@ -8,10 +8,19 @@
 <title>Argo Loro Kopi — Small Coffee Bar With Mountain View | Selo, Boyolali</title>
 <meta name="description" content="Argo Loro Kopi, Selo Boyolali. Ngopi dengan view Merapi &amp; Merbabu, buka setiap hari 9 pagi sampai 9 malam. Reservasi meja lewat WhatsApp.">
 
+<link rel="canonical" href="https://argoloro.vercel.app/">
+
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Argo Loro">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://argoloro.vercel.app/">
 <meta property="og:title" content="Argo Loro Kopi — Small Coffee Bar With Mountain View">
 <meta property="og:description" content="Selo, Boyolali · Buka tiap hari 09.00–21.00 · View Merapi &amp; Merbabu">
-<meta property="og:image" content="images/hero-1.jpg">
+<!-- og:image wajib URL absolut: sebagian scraper (WhatsApp, Twitter) tidak
+     menyelesaikan path relatif dan akan menampilkan kartu tanpa gambar. -->
+<meta property="og:image" content="https://argoloro.vercel.app/images/hero-1.jpg">
+<meta property="og:image:alt" content="Bangunan Argo Loro Kopi dengan Gunung Merapi di belakangnya">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +42,59 @@
       imagesizes="(min-width: 700px) 720px, 100vw"
       fetchpriority="high">
 <link rel="stylesheet" href="style.css">
+
+<!-- ===== Data terstruktur =====
+     Ini yang dibaca Google untuk mengenali halaman sebagai satu tempat usaha
+     nyata, bukan sekadar halaman web. @id memakai URL + fragmen supaya entitas
+     ini bisa dirujuk dari halaman lain (menu.html menunjuk ke sini).
+     alternateName memuat ejaan satu kata "Argoloro" — orang mengetiknya
+     tanpa spasi, dan tanpa baris ini tidak ada satu pun teks di situs yang
+     mengeja begitu selain wordmark footer. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "@id": "https://argoloro.vercel.app/#business",
+  "name": "Argo Loro",
+  "alternateName": ["Argoloro", "Argo Loro Kopi", "Argoloro Kopi", "Argo Loro Coffee & Eatery"],
+  "description": "Coffee bar dan eatery di Selo, Boyolali, 1.700 mdpl, dengan pemandangan Gunung Merapi dan Merbabu.",
+  "url": "https://argoloro.vercel.app/",
+  "image": "https://argoloro.vercel.app/images/hero-1.jpg",
+  "telephone": "+6281328256724",
+  "servesCuisine": ["Kopi", "Indonesia", "Pizza"],
+  "priceRange": "Rp",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Dusun II, Samiran",
+    "addressLocality": "Selo",
+    "addressRegion": "Jawa Tengah",
+    "addressCountry": "ID"
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "09:00",
+    "closes": "21:00"
+  }],
+  "hasMenu": "https://argoloro.vercel.app/menu.html",
+  "sameAs": [
+    "https://www.instagram.com/argoloro_kopi/",
+    "https://maps.app.goo.gl/bcYDaJoT8vpgFmes9"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://argoloro.vercel.app/#website",
+  "url": "https://argoloro.vercel.app/",
+  "name": "Argo Loro",
+  "alternateName": "Argoloro",
+  "inLanguage": "id-ID",
+  "publisher": { "@id": "https://argoloro.vercel.app/#business" }
+}
+</script>
 </head>
 <body>
 
