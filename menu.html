@@ -107,12 +107,23 @@
        dibuka (loading="lazy" di dalam elemen hidden), jadi pengunjung
        yang cuma memakai menu digital tidak membayar sepeser byte pun —
        prinsip yang sama dengan fasad peta di beranda. -->
-  <button class="menufoto-btn" type="button" id="menuFotoOpen">
-    <span class="menufoto-btn-icon" aria-hidden="true">🖼️</span>
-    <span class="menufoto-btn-copy">
-      <strong>Lihat menu versi foto</strong>
-      <small>3 halaman menu cetak</small>
+  <!-- Tombol menu versi foto. Gambarnya baru diunduh saat penampil
+       dibuka (loading="lazy" di dalam elemen hidden), jadi pengunjung
+       yang cuma memakai menu digital tidak membayar sepeser byte pun —
+       prinsip yang sama dengan fasad peta di beranda. -->
+  <button class="menufoto-btn" type="button" id="menuFotoOpen" aria-haspopup="dialog" aria-controls="menuFotoViewer">
+    <span class="menufoto-btn-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
     </span>
+    <span class="menufoto-btn-copy">
+      <strong>Lihat Versi Buku Menu Cetak</strong>
+      <small>Geser 3 halaman foto menu fisik · Kopi, pizza, &amp; makanan</small>
+    </span>
+    <span class="menufoto-btn-badge">3 Halaman</span>
     <span class="menufoto-btn-arrow" aria-hidden="true">→</span>
   </button>
 
@@ -142,59 +153,131 @@
   </div>
 </div>
 
-<!-- ===== Penampil menu versi foto =====
+<!-- ===== Penampil menu versi foto (Horizontal Swipe Carousel) =====
      Sumbernya images/menuargolawu*.png (6,5 MB, tidak ikut di-deploy).
      Yang dipakai di sini varian AVIF/WebP di images/opt/ — 435 KB untuk
-     ketiganya. Cara membuat ulang ada di HANDOFF.md. -->
-<div class="fotoviewer" id="menuFotoViewer" hidden>
-  <div class="fotoviewer-bar">
-    <strong>Menu cetak</strong>
-    <button type="button" class="fotoviewer-close" id="menuFotoClose" aria-label="Tutup">×</button>
+     ketiganya. Swipe horizontal dengan CSS scroll-snap native untuk 60fps
+     gesture alami di mobile, dilengkapi tab & tombol panah. -->
+<div class="fotoviewer" id="menuFotoViewer" role="dialog" aria-modal="true" aria-label="Menu versi cetak" hidden>
+  <header class="fotoviewer-bar">
+    <div class="fotoviewer-title">
+      <strong>Menu Cetak Fisik</strong>
+      <span class="fotoviewer-counter" id="fotoPageCounter">Hal 1 dari 3</span>
+    </div>
+
+    <!-- Tab langsung ke halaman -->
+    <nav class="fotoviewer-tabs" aria-label="Pilih halaman menu cetak">
+      <button type="button" class="fotoviewer-tab is-active" data-page="0">
+        <span class="fotoviewer-tab-num">1</span> Kopi &amp; Minuman
+      </button>
+      <button type="button" class="fotoviewer-tab" data-page="1">
+        <span class="fotoviewer-tab-num">2</span> Wedangan &amp; Pizza
+      </button>
+      <button type="button" class="fotoviewer-tab" data-page="2">
+        <span class="fotoviewer-tab-num">3</span> Makanan &amp; Camilan
+      </button>
+    </nav>
+
+    <div class="fotoviewer-actions">
+      <a href="images/opt/menu-cetak-1.webp" target="_blank" rel="noopener"
+         class="fotoviewer-action-btn" id="fotoOpenOriginal"
+         title="Buka gambar resolusi penuh di tab baru" aria-label="Buka resolusi penuh di tab baru">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+      </a>
+      <button type="button" class="fotoviewer-close" id="menuFotoClose" aria-label="Tutup penampil menu">×</button>
+    </div>
+  </header>
+
+  <div class="fotoviewer-stage">
+    <!-- Tombol navigasi geser Prev / Next -->
+    <button type="button" class="fotoviewer-nav-btn is-prev" id="fotoBtnPrev" aria-label="Halaman sebelumnya" disabled>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <button type="button" class="fotoviewer-nav-btn is-next" id="fotoBtnNext" aria-label="Halaman selanjutnya">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Track Carousel Horizontal (Swipe Native via Scroll-Snap) -->
+    <div class="fotoviewer-track" id="fotoTrack" tabindex="0" aria-label="Galeri menu cetak, geser kanan atau kiri">
+      
+      <!-- Halaman 1 -->
+      <div class="fotoviewer-slide" data-index="0" id="fotoSlide-0">
+        <figure class="fotoviewer-figure">
+          <a href="images/opt/menu-cetak-1.webp" target="_blank" rel="noopener" class="fotoviewer-zoomlink" title="Ketuk untuk buka gambar resolusi penuh">
+            <picture>
+              <source type="image/avif" srcset="images/opt/menu-cetak-1.avif">
+              <img src="images/opt/menu-cetak-1.webp" width="1979" height="1399"
+                   loading="eager" decoding="async"
+                   alt="Halaman 1 menu cetak: coffee, manual brewing, black series, tea, non coffee, mocktails, dan signature beserta harganya">
+            </picture>
+            <span class="fotoviewer-zoom-badge" aria-hidden="true">🔍 Buka Ukuran Penuh</span>
+          </a>
+          <figcaption class="fotoviewer-caption">
+            <strong>Halaman 1:</strong> Kopi, Manual Brewing, Black Series, Tea, Mocktails, &amp; Signature
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Halaman 2 -->
+      <div class="fotoviewer-slide" data-index="1" id="fotoSlide-1">
+        <figure class="fotoviewer-figure">
+          <a href="images/opt/menu-cetak-2.webp" target="_blank" rel="noopener" class="fotoviewer-zoomlink" title="Ketuk untuk buka gambar resolusi penuh">
+            <picture>
+              <source type="image/avif" srcset="images/opt/menu-cetak-2.avif">
+              <img src="images/opt/menu-cetak-2.webp" width="1979" height="1399"
+                   loading="lazy" decoding="async"
+                   alt="Halaman 2 menu cetak: wedangan, juice and smoothies, desert, blend and frappe, serta home made pizza">
+            </picture>
+            <span class="fotoviewer-zoom-badge" aria-hidden="true">🔍 Buka Ukuran Penuh</span>
+          </a>
+          <figcaption class="fotoviewer-caption">
+            <strong>Halaman 2:</strong> Wedangan Tradisional, Smoothies &amp; Juice, Dessert, &amp; Homemade Pizza
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Halaman 3 -->
+      <div class="fotoviewer-slide" data-index="2" id="fotoSlide-2">
+        <figure class="fotoviewer-figure">
+          <a href="images/opt/menu-cetak-3.webp" target="_blank" rel="noopener" class="fotoviewer-zoomlink" title="Ketuk untuk buka gambar resolusi penuh">
+            <picture>
+              <source type="image/avif" srcset="images/opt/menu-cetak-3.avif">
+              <img src="images/opt/menu-cetak-3.webp" width="1979" height="1399"
+                   loading="lazy" decoding="async"
+                   alt="Halaman 3 menu cetak: starter, special menu, dimsum, pasta, rice bowl, mie, dan nasi goreng">
+            </picture>
+            <span class="fotoviewer-zoom-badge" aria-hidden="true">🔍 Buka Ukuran Penuh</span>
+          </a>
+          <figcaption class="fotoviewer-caption">
+            <strong>Halaman 3:</strong> Starter &amp; Camilan, Dimsum, Pasta, Rice Bowl, Mie &amp; Nasi Goreng
+          </figcaption>
+        </figure>
+      </div>
+
+    </div>
   </div>
 
-  <div class="fotoviewer-body">
-    <p class="fotoviewer-hint">Ketuk gambar untuk membuka ukuran penuh — di sana bisa dicubit untuk zoom.</p>
-
-    <figure class="fotoviewer-page">
-      <a href="images/opt/menu-cetak-1.webp" target="_blank" rel="noopener">
-        <picture>
-          <source type="image/avif" srcset="images/opt/menu-cetak-1.avif">
-          <img src="images/opt/menu-cetak-1.webp" width="1979" height="1399"
-               loading="lazy" decoding="async"
-               alt="Halaman 1 menu cetak: coffee, manual brewing, black series, tea, non coffee, mocktails, dan signature beserta harganya">
-        </picture>
-      </a>
-      <figcaption>Halaman 1 — Kopi, tea, mocktails, signature</figcaption>
-    </figure>
-
-    <figure class="fotoviewer-page">
-      <a href="images/opt/menu-cetak-2.webp" target="_blank" rel="noopener">
-        <picture>
-          <source type="image/avif" srcset="images/opt/menu-cetak-2.avif">
-          <img src="images/opt/menu-cetak-2.webp" width="1979" height="1399"
-               loading="lazy" decoding="async"
-               alt="Halaman 2 menu cetak: wedangan, juice and smoothies, desert, blend and frappe, serta home made pizza">
-        </picture>
-      </a>
-      <figcaption>Halaman 2 — Wedangan, juice, frappe, pizza</figcaption>
-    </figure>
-
-    <figure class="fotoviewer-page">
-      <a href="images/opt/menu-cetak-3.webp" target="_blank" rel="noopener">
-        <picture>
-          <source type="image/avif" srcset="images/opt/menu-cetak-3.avif">
-          <img src="images/opt/menu-cetak-3.webp" width="1979" height="1399"
-               loading="lazy" decoding="async"
-               alt="Halaman 3 menu cetak: starter, special menu, dimsum, pasta, rice bowl, mie, dan nasi goreng">
-        </picture>
-      </a>
-      <figcaption>Halaman 3 — Starter, rice bowl, mie, nasi goreng</figcaption>
-    </figure>
-
-    <p class="fotoviewer-note">
-      Harga di menu digital lebih mudah dicari dan selalu ikut pembaruan.
-    </p>
-  </div>
+  <!-- Kontrol bawah / footer viewer -->
+  <footer class="fotoviewer-footer">
+    <div class="fotoviewer-dots" id="fotoDots" role="tablist" aria-label="Indikator halaman">
+      <button type="button" class="fotoviewer-dot is-active" data-page="0" aria-label="Ke Halaman 1"></button>
+      <button type="button" class="fotoviewer-dot" data-page="1" aria-label="Ke Halaman 2"></button>
+      <button type="button" class="fotoviewer-dot" data-page="2" aria-label="Ke Halaman 3"></button>
+    </div>
+    <div class="fotoviewer-hint">
+      <span>👈 <strong>Geser / swipe</strong> ke samping untuk pindah halaman 👉</span>
+    </div>
+  </footer>
 </div>
 
 <a class="sticky-cta is-visible" href="https://wa.me/6281328256724?text=Halo%20Argo%20Loro%2C%20saya%20mau%20pesan"

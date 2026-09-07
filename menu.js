@@ -363,7 +363,7 @@
 })();
 
 /* ============================================================
-   PENAMPIL MENU VERSI FOTO
+   PENAMPIL MENU VERSI FOTO (HORIZONTAL SWIPE CAROUSEL)
    Blok terpisah dengan sengaja: kalau menu-data.js bermasalah,
    IIFE di atas berhenti di guard-nya dan seluruh isinya mati.
    Tombol foto menu tidak bergantung pada data itu, jadi tetap
@@ -377,14 +377,91 @@
   var tutup = document.getElementById("menuFotoClose");
   if (!tombol || !viewer || !tutup) return;
 
-  var body = viewer.querySelector(".fotoviewer-body");
+  var track = document.getElementById("fotoTrack");
+  var slides = viewer.querySelectorAll(".fotoviewer-slide");
+  var tabs = viewer.querySelectorAll(".fotoviewer-tab");
+  var dots = viewer.querySelectorAll(".fotoviewer-dot");
+  var btnPrev = document.getElementById("fotoBtnPrev");
+  var btnNext = document.getElementById("fotoBtnNext");
+  var counter = document.getElementById("fotoPageCounter");
+  var originalLink = document.getElementById("fotoOpenOriginal");
+
+  var totalHalaman = slides.length || 3;
+  var currentIndex = 0;
+  var isScrolling = false;
+
+  var imageSources = [
+    "images/opt/menu-cetak-1.webp",
+    "images/opt/menu-cetak-2.webp",
+    "images/opt/menu-cetak-3.webp"
+  ];
+
+  function perbaruiUI(idx) {
+    if (idx < 0) idx = 0;
+    if (idx >= totalHalaman) idx = totalHalaman - 1;
+    currentIndex = idx;
+
+    if (counter) {
+      counter.textContent = "Hal " + (idx + 1) + " dari " + totalHalaman;
+    }
+
+    if (originalLink && imageSources[idx]) {
+      originalLink.href = imageSources[idx];
+    }
+
+    if (btnPrev) btnPrev.disabled = (idx === 0);
+    if (btnNext) btnNext.disabled = (idx === totalHalaman - 1);
+
+    Array.prototype.forEach.call(tabs, function (tab) {
+      var p = parseInt(tab.getAttribute("data-page"), 10);
+      tab.classList.toggle("is-active", p === idx);
+    });
+
+    Array.prototype.forEach.call(dots, function (dot) {
+      var p = parseInt(dot.getAttribute("data-page"), 10);
+      dot.classList.toggle("is-active", p === idx);
+    });
+  }
+
+  function lompatKeHalaman(idx, instant) {
+    if (idx < 0) idx = 0;
+    if (idx >= totalHalaman) idx = totalHalaman - 1;
+    if (!track) return;
+
+    var targetSlide = slides[idx];
+    if (targetSlide) {
+      isScrolling = true;
+      track.scrollTo({
+        left: targetSlide.offsetLeft,
+        behavior: instant ? "auto" : "smooth"
+      });
+      perbaruiUI(idx);
+      window.setTimeout(function () { isScrolling = false; }, 300);
+    }
+  }
+
+  // Deteksi posisi scroll saat digeser / swipe touch dengan scroll-snap
+  var scrollDebounce = null;
+  if (track) {
+    track.addEventListener("scroll", function () {
+      if (isScrolling) return;
+      window.clearTimeout(scrollDebounce);
+      scrollDebounce = window.setTimeout(function () {
+        var lebar = track.clientWidth;
+        if (!lebar) return;
+        var idx = Math.round(track.scrollLeft / lebar);
+        if (idx !== currentIndex && idx >= 0 && idx < totalHalaman) {
+          perbaruiUI(idx);
+        }
+      }, 50);
+    }, { passive: true });
+  }
 
   function buka() {
     viewer.hidden = false;
-    // Kunci gulir halaman di belakang, kalau tidak gulirannya "bocor"
-    // ke daftar menu begitu penampil sudah mentok di bawah.
     document.body.classList.add("is-locked");
-    if (body) body.scrollTop = 0;
+    lompatKeHalaman(0, true);
+    perbaruiUI(0);
     tutup.focus();
   }
 
@@ -397,12 +474,45 @@
   tombol.addEventListener("click", buka);
   tutup.addEventListener("click", tutupViewer);
 
-  // Klik di area gelap di luar isi = tutup.
-  viewer.addEventListener("click", function (e) {
-    if (e.target === viewer || e.target === body) tutupViewer();
+  if (btnPrev) {
+    btnPrev.addEventListener("click", function (e) {
+      e.stopPropagation();
+      lompatKeHalaman(currentIndex - 1);
+    });
+  }
+
+  if (btnNext) {
+    btnNext.addEventListener("click", function (e) {
+      e.stopPropagation();
+      lompatKeHalaman(currentIndex + 1);
+    });
+  }
+
+  Array.prototype.forEach.call(tabs, function (tab) {
+    tab.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var p = parseInt(tab.getAttribute("data-page"), 10);
+      lompatKeHalaman(p);
+    });
   });
 
+  Array.prototype.forEach.call(dots, function (dot) {
+    dot.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var p = parseInt(dot.getAttribute("data-page"), 10);
+      lompatKeHalaman(p);
+    });
+  });
+
+  // Navigasi keyboard: Panah Kiri/Kanan & Escape
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !viewer.hidden) tutupViewer();
+    if (viewer.hidden) return;
+    if (e.key === "Escape") {
+      tutupViewer();
+    } else if (e.key === "ArrowLeft") {
+      lompatKeHalaman(currentIndex - 1);
+    } else if (e.key === "ArrowRight") {
+      lompatKeHalaman(currentIndex + 1);
+    }
   });
 })();

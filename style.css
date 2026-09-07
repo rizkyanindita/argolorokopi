@@ -1239,127 +1239,496 @@ section {
   align-items: center;
   gap: 12px;
   width: 100%;
-  margin: 14px 0 0;
-  padding: 12px 14px;
+  margin: 14px 0 6px;
+  padding: 12px 16px;
   border-radius: var(--radius);
   border: 1.5px solid var(--sand);
-  background: #fff;
+  background: linear-gradient(135deg, #ffffff 0%, #FAF6EF 100%);
   color: var(--ink);
   font-family: var(--font-body);
   text-align: left;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: border-color 180ms ease, transform 180ms ease;
+  transition: border-color 200ms ease, transform 180ms ease, box-shadow 200ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.menufoto-btn:active { transform: scale(0.99); }
+.menufoto-btn:active {
+  transform: scale(0.985);
+}
 
-.menufoto-btn-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.menufoto-btn-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(201, 70, 31, 0.1);
+  color: var(--terracotta);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
 
-.menufoto-btn-copy { display: flex; flex-direction: column; min-width: 0; }
+.menufoto-btn-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
 
 .menufoto-btn-copy strong {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 14.5px;
   letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-.menufoto-btn-copy small { font-size: 12px; color: var(--ink-soft); }
+.menufoto-btn-copy small {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
 
-.menufoto-btn-arrow { margin-left: auto; font-size: 16px; opacity: 0.55; flex-shrink: 0; }
+.menufoto-btn-badge {
+  flex-shrink: 0;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--cream-2);
+  border: 1px solid var(--sand);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--terracotta-deep);
+  letter-spacing: 0.02em;
+}
+
+.menufoto-btn-arrow {
+  font-size: 16px;
+  color: var(--terracotta);
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
 
 @media (hover: hover) and (pointer: fine) {
-  .menufoto-btn:hover { border-color: var(--terracotta); }
+  .menufoto-btn:hover {
+    border-color: var(--terracotta);
+    box-shadow: 0 4px 18px rgba(201, 70, 31, 0.14);
+  }
+  .menufoto-btn:hover .menufoto-btn-arrow {
+    transform: translateX(3px);
+    opacity: 1;
+  }
+  .menufoto-btn:hover .menufoto-btn-icon {
+    transform: scale(1.05);
+  }
 }
 
-/* Penampil layar penuh. Harus menang dari .menunav (z-index 60) dan
-   .sticky-cta (z-index 90) yang sama-sama melayang di halaman ini. */
+/* ===== Penampil Layar Penuh (Horizontal Swipe Carousel) =====
+   Harus menang dari .menunav (z-index 60) dan .sticky-cta (z-index 90). */
 .fotoviewer {
   position: fixed;
   inset: 0;
   z-index: 200;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: rgba(16,14,12,0.92);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  animation: fadeUp 200ms ease-out;
+  background: rgba(14, 12, 10, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: fadeUp 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  color: #fff;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
+/* Bar Atas Penampil */
 .fotoviewer-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-shrink: 0;
-  padding: 12px 16px;
-  background: rgba(16,14,12,0.6);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-  color: #fff;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
+  padding: 10px 16px;
+  background: rgba(14, 12, 10, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+.fotoviewer-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.fotoviewer-title strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.fotoviewer-counter {
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Tab navigasi cepat di bar atas */
+.fotoviewer-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fotoviewer-tabs::-webkit-scrollbar { display: none; }
+
+.fotoviewer-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.fotoviewer-tab-num {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.fotoviewer-tab:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.fotoviewer-tab.is-active {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(201, 70, 31, 0.45);
+}
+
+.fotoviewer-tab.is-active .fotoviewer-tab-num {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Tombol aksi (zoom resolusi penuh & tutup) */
+.fotoviewer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.fotoviewer-action-btn,
 .fotoviewer-close {
   width: 34px;
   height: 34px;
-  flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  font-size: 20px;
-  line-height: 1;
   cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+  text-decoration: none;
+  line-height: 1;
 }
 
-.fotoviewer-body {
+.fotoviewer-close {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.fotoviewer-action-btn:hover,
+.fotoviewer-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.fotoviewer-action-btn:active,
+.fotoviewer-close:active {
+  transform: scale(0.94);
+}
+
+/* Area Panggung Carousel */
+.fotoviewer-stage {
+  position: relative;
   flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 14px 14px 30px;
-}
-
-.fotoviewer-hint,
-.fotoviewer-note {
-  margin: 0 0 14px;
-  text-align: center;
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.72);
-}
-
-.fotoviewer-note { margin: 18px 0 0; }
-
-.fotoviewer-page { margin: 0 0 18px; }
-
-.fotoviewer-page img {
+  min-height: 0;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Tombol Panah Mengambang (Prev & Next) */
+.fotoviewer-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 25;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(24, 21, 18, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 180ms ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.fotoviewer-nav-btn.is-prev { left: 14px; }
+.fotoviewer-nav-btn.is-next { right: 14px; }
+
+.fotoviewer-nav-btn:hover:not(:disabled) {
+  background: rgba(201, 70, 31, 0.85);
+  border-color: var(--terracotta);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.fotoviewer-nav-btn:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.fotoviewer-nav-btn:disabled {
+  opacity: 0.15;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Track Horizontal (Scroll-Snap Native untuk Geser / Swipe Sangat Halus) */
+.fotoviewer-track {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.fotoviewer-track::-webkit-scrollbar { display: none; }
+
+/* Slide Menu */
+.fotoviewer-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px 6px;
+  box-sizing: border-box;
+}
+
+.fotoviewer-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.fotoviewer-zoomlink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: calc(100% - 32px);
+  max-width: 100%;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+
+.fotoviewer-zoomlink picture,
+.fotoviewer-zoomlink img {
+  display: block;
+  max-height: calc(100dvh - 170px);
+  max-width: 100%;
+  width: auto;
   height: auto;
+  object-fit: contain;
   border-radius: var(--radius);
   background: var(--cream);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  transition: transform 200ms ease;
 }
 
-.fotoviewer-page figcaption {
-  margin-top: 7px;
-  text-align: center;
-  font-size: 12px;
+.fotoviewer-zoom-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(16, 14, 12, 0.8);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 11.5px;
   font-weight: 600;
-  color: rgba(255,255,255,0.66);
+  opacity: 0.9;
+  transition: opacity 180ms ease, background 180ms ease;
+  pointer-events: none;
 }
 
-/* Halaman di belakang dikunci saat penampil terbuka. */
-body.is-locked { overflow: hidden; }
+@media (hover: hover) and (pointer: fine) {
+  .fotoviewer-zoomlink:hover img {
+    transform: scale(1.01);
+  }
+  .fotoviewer-zoomlink:hover .fotoviewer-zoom-badge {
+    background: var(--terracotta);
+    opacity: 1;
+  }
+}
 
-@media (min-width: 700px) {
-  .fotoviewer-body { max-width: 900px; width: 100%; margin: 0 auto; }
+.fotoviewer-caption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fotoviewer-caption strong {
+  color: #fff;
+}
+
+/* Footer & Indikator Titik */
+.fotoviewer-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 8px 16px 14px;
+  background: rgba(14, 12, 10, 0.75);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fotoviewer-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fotoviewer-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fotoviewer-dot.is-active {
+  width: 28px;
+  border-radius: 999px;
+  background: var(--terracotta);
+  box-shadow: 0 1px 6px rgba(201, 70, 31, 0.5);
+}
+
+.fotoviewer-hint {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.62);
+  text-align: center;
+}
+
+.fotoviewer-hint strong {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* Responsif Mobile & Layar Kecil */
+@media (max-width: 640px) {
+  .fotoviewer-bar {
+    padding: 8px 12px;
+  }
+  .fotoviewer-title strong {
+    font-size: 13.5px;
+  }
+  .fotoviewer-tabs {
+    display: none; /* Di layar kecil, indikator diwakili counter bar atas & dots bawah agar luas */
+  }
+  .fotoviewer-nav-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .fotoviewer-nav-btn.is-prev { left: 8px; }
+  .fotoviewer-nav-btn.is-next { right: 8px; }
+  .fotoviewer-slide {
+    padding: 6px 8px 4px;
+  }
+  .fotoviewer-caption {
+    font-size: 11.5px;
+  }
+  .fotoviewer-zoomlink picture,
+  .fotoviewer-zoomlink img {
+    max-height: calc(100dvh - 150px);
+  }
+}
+
+/* Kunci body saat penampil terbuka */
+body.is-locked {
+  overflow: hidden;
+  touch-action: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fotoviewer { animation: none; }
   .menufoto-btn { transition: none; }
+  .fotoviewer-track { scroll-behavior: auto; }
 }
 
 /* ===== Status pencarian & keadaan kosong ===== */
