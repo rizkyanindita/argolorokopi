@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<title>Galeri Giveaway — Argo Loro Coffee &amp; Eatery | Selo, Boyolali</title>
+<meta name="description" content="Foto-foto peserta giveaway Argo Loro Kopi yang sudah disetujui. Yuk ikutan juga!">
+
+<link rel="canonical" href="https://argoloro.vercel.app/giveaway/galeri">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Argo Loro">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://argoloro.vercel.app/giveaway/galeri">
+<meta property="og:title" content="Galeri Giveaway — Argo Loro Coffee &amp; Eatery">
+<meta property="og:description" content="Foto-foto peserta giveaway Argo Loro Kopi yang sudah disetujui. Yuk ikutan juga!">
+<meta property="og:image" content="https://argoloro.vercel.app/images/hero-1.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body class="page-giveaway">
+
+<div class="gwbar">
+  <a class="gwbar-back" href="../" aria-label="Kembali ke halaman giveaway">←</a>
+  <div class="gwbar-title">
+    <strong>Galeri Giveaway</strong>
+    <small>Argo Loro · coffee &amp; eatery</small>
+  </div>
+</div>
+
+<main>
+  <section class="gwgallery-head">
+    <h1 class="section-title">Foto Peserta Giveaway</h1>
+    <p class="gwgallery-sub">Klik nama untuk buka profil Instagram-nya.</p>
+  </section>
+
+  <section class="gwgallery-section" aria-label="Galeri foto peserta">
+    <div class="gwgrid" id="gwGrid"></div>
+
+    <p class="gwgallery-empty" id="gwGalleryEmpty" hidden>
+      Belum ada foto yang tampil di sini.<br>
+      <small>Foto peserta muncul setelah dicek tim kami — cek lagi nanti ya.</small>
+    </p>
+
+    <p class="gwgallery-error" id="gwGalleryError" hidden>
+      Galeri gagal dimuat. Coba muat ulang halaman.
+    </p>
+  </section>
+
+  <section class="gwgaleri-link" aria-label="Ikut giveaway">
+    <a class="textlink" href="../">Ikut giveaway juga →</a>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">ARGOLORO</p>
+  <p>Selo, Boyolali · Buka tiap hari 09.00–21.00</p>
+  <p class="footer-fine">&copy; <span id="year"></span> Argo Loro Kopi</p>
+</footer>
+
+<script src="../../giveaway-config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
+<script src="../../giveaway-galeri.js" defer></script>
+
+<!-- Vercel Web Analytics — lihat catatan di index.html -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

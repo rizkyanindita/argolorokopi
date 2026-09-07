@@ -1,12 +1,80 @@
 # Argo Loro — Status Pekerjaan
 
-Terakhir diperbarui: 16 Agustus 2026
+Terakhir diperbarui: 7 September 2026
 
 Microsite untuk link bio Instagram **Argo Loro — coffee & eatery**, Selo, Boyolali.
 Situs statis murni: HTML + CSS + JS vanilla. **Tanpa framework, tanpa build step** —
 ini keputusan sadar, alasannya di bagian "Keputusan arsitektur" di bawah.
 
 ---
+
+## 🎭 Mockup giveaway di /preview/ (7 September 2026) — peragaan, bukan fitur
+
+Tiga halaman peraga untuk ditunjukkan ke tim socmed klien sebelum fitur
+giveaway dibangun beneran. **Tanpa backend, tanpa Supabase, tanpa upload** —
+semua data dari `data/mock-giveaway.js`.
+
+- `/preview/giveaway/` — form peserta (submit palsu: loading 1,5 detik → sukses)
+- `/preview/giveaway/galeri/` — galeri publik (`?kosong=1` untuk peraga empty state)
+- `/preview/giveaway/kurasi/` — alat kurasi tim socmed (filter, aksi, hitungan)
+
+Semua bertanda `<meta name="robots" content="noindex, nofollow">` dan **tidak
+ditautkan dari navigasi situs**. `robots.txt` sengaja dibiarkan `Allow: /` —
+kalau /preview diblokir di robots.txt, Google tidak bisa membaca tag noindex-nya
+dan justru bisa mengindeks URL-nya tanpa isi.
+
+Foto dummy di `preview/mock-photos/` = hasil crop berbeda dari hero-1/2/3
+(foto milik klien sendiri, bukan stok berhak cipta).
+
+Kalau mockup sudah tidak dipakai, hapus: folder `preview/`,
+`data/mock-giveaway.js`, dan blok "HALAMAN MOCKUP" di `style.css`.
+
+---
+
+## ✅ Fitur Giveaway/UGC (7 September 2026) — kode selesai, butuh setup Supabase
+
+Dua halaman baru: `/giveaway` (form pendaftaran) dan `/giveaway/galeri` (foto
+peserta approved). Alur: pengunjung scan QR di meja → upload foto + data diri
+→ masuk status `pending` di Supabase → tim socmed approve lewat dashboard →
+foto tampil di galeri publik.
+
+**Berkas baru:**
+- `giveaway/index.html`, `giveaway/galeri/index.html` — halaman (folder +
+  `index.html` supaya URL bersih `/giveaway` tanpa perlu `vercel.json`)
+- `giveaway.js` — logika form: validasi, kompresi foto di client, honeypot,
+  anti double-submit, upload ke Supabase Storage + insert ke tabel
+- `giveaway-galeri.js` — fetch & render galeri dari view `giveaway_gallery`
+- `giveaway-config.example.js` — template kredensial (commit ini)
+- `giveaway-config.js` — kredensial asli, **di-gitignore**, isi manual dari
+  Supabase Dashboard (lihat komentar di berkas ini untuk detail)
+- `supabase-giveaway-setup.sql` — jalankan sekali di Supabase SQL Editor:
+  bikin tabel `giveaway_entries`, RLS, view `giveaway_gallery`, storage
+  bucket `giveaway-photos`
+- `GIVEAWAY-MODERASI.md` — cara approve/reject foto, ditulis untuk tim
+  socmed yang bukan orang teknis
+- Section baru di `style.css` (cari "HALAMAN GIVEAWAY") — dipakai kedua
+  halaman baru, tidak menyentuh style beranda/menu yang sudah ada
+
+**Yang WAJIB dilakukan sebelum fitur ini bisa dipakai:**
+1. Bikin project Supabase, jalankan `supabase-giveaway-setup.sql` di SQL Editor
+2. Isi `giveaway-config.js` dengan URL + anon key project itu (lihat
+   `giveaway-config.example.js`)
+3. Deploy ulang (`npx vercel@latest deploy --prod --yes`)
+
+**Kenapa kredensial bukan "environment variable" beneran:** situs ini tanpa
+build step, jadi tidak ada mekanisme suntik env var ke JS browser. Anon key
+Supabase memang dirancang publik (keamanan datang dari RLS, bukan dari
+menyembunyikan key), jadi `giveaway-config.js` yang di-gitignore adalah
+padanan env var yang realistis untuk arsitektur statis ini — bukan kompromi
+keamanan. Jangan pernah taruh `service_role` key di kode manapun yang jalan
+di browser.
+
+**Belum diuji:** alur asli end-to-end ke Supabase sungguhan (sudah diuji
+menyeluruh dengan network mocking di Playwright — validasi, honeypot,
+anti double-submit, kompresi gambar, state sukses/error/kosong, semua lolos —
+tapi belum pernah menyentuh project Supabase yang nyata karena belum dibuat).
+Setelah step di atas selesai, uji sekali submit asli dari HP sebelum
+disebar lewat QR code.
 
 ## ✅ Halaman menu sudah diverifikasi (16 Agustus 2026)
 

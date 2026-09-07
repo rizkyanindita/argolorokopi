@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<meta name="robots" content="noindex, nofollow">
+<title>[Mockup] Kurasi Foto — Argo Loro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="page-giveaway page-preview page-kurasi">
+
+<div class="pvbanner">
+  <span class="pvbanner-tag">Mockup</span>
+  <span>Simulasi — perubahan status hilang saat halaman dimuat ulang</span>
+</div>
+<nav class="pvnav" aria-label="Navigasi mockup">
+  <a href="/preview/giveaway/">Form Peserta</a>
+  <a href="/preview/giveaway/galeri/">Galeri Publik</a>
+  <a href="/preview/giveaway/kurasi/" class="is-active">Kurasi Tim</a>
+</nav>
+
+<div class="gwbar">
+  <a class="gwbar-back" href="/preview/giveaway/galeri/" aria-label="Ke galeri">←</a>
+  <div class="gwbar-title">
+    <strong>Kurasi Foto</strong>
+    <small>Alat kerja tim socmed</small>
+  </div>
+</div>
+
+<main class="kmain">
+
+  <!-- ===== Hitungan ===== -->
+  <section class="kstats" aria-label="Ringkasan">
+    <div class="kstat">
+      <strong id="statTotal">0</strong>
+      <span>Total masuk</span>
+    </div>
+    <div class="kstat kstat-warn">
+      <strong id="statPending">0</strong>
+      <span>Menunggu review</span>
+    </div>
+    <div class="kstat">
+      <strong id="statApproved">0</strong>
+      <span>Disetujui</span>
+    </div>
+    <div class="kstat kstat-ok">
+      <strong id="statStok">0</strong>
+      <span>Belum dipakai</span>
+    </div>
+  </section>
+
+  <!-- ===== Filter ===== -->
+  <section class="kfilters" aria-label="Filter foto">
+    <div class="kfilter-group" data-filter="status">
+      <span class="kfilter-label">Status</span>
+      <div class="kchips">
+        <button class="kchip is-active" type="button" data-value="semua">Semua</button>
+        <button class="kchip" type="button" data-value="pending">Menunggu review</button>
+        <button class="kchip" type="button" data-value="approved">Disetujui</button>
+        <button class="kchip" type="button" data-value="rejected">Ditolak</button>
+      </div>
+    </div>
+
+    <div class="kfilter-group" data-filter="orientasi">
+      <span class="kfilter-label">Orientasi</span>
+      <div class="kchips">
+        <button class="kchip is-active" type="button" data-value="semua">Semua</button>
+        <button class="kchip" type="button" data-value="portrait">Portrait</button>
+        <button class="kchip" type="button" data-value="landscape">Landscape</button>
+      </div>
+    </div>
+
+    <div class="kfilter-group" data-filter="dipakai">
+      <span class="kfilter-label">Sudah dipakai</span>
+      <div class="kchips">
+        <button class="kchip is-active" type="button" data-value="semua">Semua</button>
+        <button class="kchip" type="button" data-value="belum">Belum dipakai</button>
+        <button class="kchip" type="button" data-value="sudah">Sudah dipakai</button>
+      </div>
+    </div>
+
+    <!-- Chip kategori dirender JS dari MOCK_KATEGORI supaya nambah
+         kategori cukup di data/mock-giveaway.js saja. -->
+    <div class="kfilter-group" data-filter="kategori">
+      <span class="kfilter-label">Kategori isi</span>
+      <div class="kchips" id="kchipsKategori"></div>
+    </div>
+
+    <!-- Tanggal sengaja dropdown, bukan chip: tanggalnya bisa banyak dan
+         daftar chip jadi kepanjangan. Isinya diambil dari tanggal yang
+         benar-benar ada di data, ditulis format Indonesia. -->
+    <div class="kfilter-group kfilter-tanggal">
+      <label class="kfilter-label" for="kTanggal">Tanggal masuk</label>
+      <select class="kselect" id="kTanggal"></select>
+    </div>
+  </section>
+
+  <p class="khasil" id="kHasil"></p>
+
+  <section class="kgrid" id="kGrid" aria-label="Daftar foto"></section>
+
+  <p class="kempty" id="kEmpty" hidden>
+    Tidak ada foto yang cocok dengan filter ini.<br>
+    <small>Coba longgarkan salah satu filter di atas.</small>
+  </p>
+
+</main>
+
+<!-- Pemberitahuan kecil setelah aksi (salin kredit, ubah status, dll) -->
+<div class="ktoast" id="kToast" hidden></div>
+
+<footer class="site-footer">
+  <p class="footer-mark">ARGOLORO</p>
+  <p>Mockup alat kurasi · data dummy</p>
+  <p class="footer-fine">&copy; <span id="year"></span> Argo Loro Kopi</p>
+</footer>
+
+<script src="/data/mock-giveaway.js" defer></script>
+<script src="/preview/preview-kurasi.js" defer></script>
+</body>
+</html>

@@ -373,6 +373,33 @@ section {
   box-shadow: var(--shadow-sm);
 }
 
+/* CTA giveaway: gradasi ember->terracotta supaya beda dari Reservasi
+   (terracotta polos) tapi tetap dari palet yang sama, plus badge kecil
+   berdenyut di pojok sebagai "hook" mata tanpa perlu warna baru. */
+.action-giveaway {
+  margin-top: 11px;
+  background: linear-gradient(135deg, var(--ember), var(--terracotta));
+  color: #fff;
+  box-shadow: var(--shadow-lift);
+  position: relative;
+}
+
+.action-giveaway-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--fern);
+  border: 2px solid var(--cream);
+  animation: pulseDot 2.2s ease-out infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action-giveaway:hover { background: linear-gradient(135deg, var(--ember), var(--terracotta-deep)); }
+}
+
 .action-pair {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1464,4 +1491,1006 @@ section {
 
 @media (prefers-reduced-motion: reduce) {
   .faq-item summary::after { transition: none; }
+}
+
+/* ============================================================
+   HALAMAN GIVEAWAY (/giveaway, /giveaway/galeri)
+   Memakai token yang sama dengan beranda & menu — warna, radius,
+   shadow, font semua dari :root di atas, tidak ada nilai baru.
+   ============================================================ */
+
+.page-giveaway { background: var(--cream); }
+
+/* WAJIB: beberapa komponen di bawah (.gwform, .gwupload-btn, .gwclosed,
+   .gwsuccess) menyetel display:flex langsung. Tanpa penjaga ini,
+   attribute [hidden] kalah spesifisitas dan elemennya tetap terlihat
+   walau hidden=true — persis bug yang sudah pernah terjadi di halaman
+   menu (lihat HANDOFF.md). Jangan dihapus. */
+.page-giveaway [hidden] { display: none; }
+
+/* ===== Bar atas (sama semangatnya dengan .menubar, versi ringkas) ===== */
+.gwbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--sand);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.gwbar-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--sand);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.gwbar-title { display: flex; flex-direction: column; min-width: 0; }
+
+.gwbar-title strong {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.gwbar-title small { font-size: 11.5px; color: var(--ink-soft); }
+
+/* ===== Hero ===== */
+.gwhero { padding-top: 26px; text-align: center; }
+
+.gwhero-media {
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 3 / 4;
+}
+
+.gwhero-media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== Kartu hadiah — hook halaman ini =====
+   Versi sebelumnya cuma satu baris teks abu-abu 15px di bawah judul,
+   jadi justru lebih kecil dan lebih pucat daripada judul generik di
+   atasnya. Sekarang: menumpuk di atas foto (jadi terbaca duluan),
+   gradasi terakota yang sama dengan CTA giveaway di beranda, dan
+   nominalnya dipajang sebesar tipografi hero. */
+.gwprize {
+  position: relative;
+  z-index: 2;
+  max-width: 300px;
+  margin: -46px auto 0;
+  padding: 18px 20px 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--ember), var(--terracotta));
+  box-shadow: var(--shadow-lift);
+  color: #fff;
+  text-align: center;
+}
+
+.gwprize-kicker {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.gwprize-amount {
+  margin: 11px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 11vw, 2.9rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-shadow: 0 2px 18px rgba(16,14,12,0.18);
+}
+
+.gwprize-what {
+  margin: 7px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.92);
+}
+
+.gwhero-title {
+  margin-top: 22px;
+  font-size: clamp(1.2rem, 5vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.gwhero-sub {
+  margin: 8px auto 0;
+  max-width: 40ch;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+
+/* Chip urgensi — "sisa X hari" menggerakkan lebih kuat daripada
+   tanggal saja. Bentuknya meminjam .status supaya tetap satu bahasa. */
+.gwhero-urgency {
+  display: inline-flex;
+  align-items: center;
+  margin: 14px 0 0;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: rgba(201,70,31,0.09);
+  color: var(--terracotta-deep);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== Cara ikut ===== */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  background: #fff;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.step p { margin: 0; padding-top: 3px; font-size: 14.5px; line-height: 1.45; }
+
+/* ===== Form ===== */
+.gwform-section { padding-top: 8px; }
+
+.gwform {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gwfield { display: flex; flex-direction: column; gap: 6px; }
+
+.gwfield label,
+.gwfield-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.gwfield input[type="text"],
+.gwfield input[type="tel"] {
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--sand);
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.gwfield input:focus {
+  outline: none;
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(201,70,31,0.14);
+}
+
+/* .gwprefix-wrap = versi umum dari .gwig-wrap: kotak dengan awalan tetap
+   yang tidak bisa diedit (@ untuk Instagram, +62 untuk nomor WhatsApp). */
+.gwig-wrap,
+.gwprefix-wrap {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--sand);
+  background: #fff;
+  padding-left: 14px;
+}
+
+.gwig-wrap:focus-within,
+.gwprefix-wrap:focus-within {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(201,70,31,0.14);
+}
+
+.gwig-at,
+.gwprefix { color: var(--ink-soft); font-weight: 600; flex-shrink: 0; }
+
+/* Awalan +62 diberi garis pemisah supaya jelas itu bagian tetap,
+   bukan bagian yang ikut diketik. */
+.gwprefix {
+  padding-right: 10px;
+  margin-right: 4px;
+  border-right: 1px solid var(--sand);
+}
+
+.gwig-wrap input,
+.gwprefix-wrap input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 14px 0 4px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.gwig-wrap input:focus,
+.gwprefix-wrap input:focus { outline: none; }
+
+/* Honeypot — di luar layar, bukan display:none, supaya bot yang
+   memeriksa visibilitas elemen tetap terjebak. Manusia tidak pernah
+   melihat atau menyentuhnya. */
+.gwhoneypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.gwupload { position: relative; }
+
+.gwupload input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.gwupload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  border-radius: var(--radius);
+  border: 1.5px dashed var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gwupload-icon { font-size: 19px; }
+
+.gwpreview {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.gwpreview img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+}
+
+.gwpreview-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(16,14,12,0.62);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gwconsent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.gwconsent input { margin-top: 2px; flex-shrink: 0; width: 18px; height: 18px; accent-color: var(--terracotta); }
+
+.gwerror {
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: var(--radius);
+  background: rgba(201,70,31,0.09);
+  color: var(--terracotta-deep);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.gwsubmit {
+  min-height: 54px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--terracotta);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15.5px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lift);
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.gwsubmit:active { transform: scale(0.985); }
+.gwsubmit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+@media (hover: hover) and (pointer: fine) {
+  .gwsubmit:not(:disabled):hover { background: var(--terracotta-deep); }
+  .gwupload-btn:hover { border-color: var(--terracotta); }
+}
+
+/* ===== Ditutup / sukses ===== */
+.gwclosed,
+.gwsuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  padding: 28px 20px;
+  background: #fff;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.gwclosed-icon,
+.gwsuccess-icon { font-size: 36px; }
+
+.gwclosed h3,
+.gwsuccess h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.gwclosed p,
+.gwsuccess p {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.gwclosed .action,
+.gwsuccess .action { width: 100%; max-width: 340px; }
+
+/* ===== Deadline ===== */
+.gwdeadline-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.gwdeadline-item {
+  background: #fff;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.gwdeadline-item h3 {
+  margin: 4px 0 3px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.gwdeadline-item p { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 14.5px; }
+
+.gwgaleri-link { text-align: center; }
+
+/* ===== Galeri ===== */
+.gwgallery-head { padding-bottom: 8px; text-align: center; }
+.gwgallery-sub { margin: 6px 0 0; font-size: 14px; color: var(--ink-soft); }
+
+.gwgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.gwcard {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--sand);
+  box-shadow: var(--shadow-sm);
+}
+
+.gwcard img { width: 100%; height: 100%; object-fit: cover; }
+
+.gwcard-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 10px 8px;
+  background: linear-gradient(180deg, rgba(16,14,12,0) 0%, rgba(16,14,12,0.75) 100%);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gwcard:hover .gwcard-label { text-decoration: underline; }
+}
+
+.gwgallery-empty,
+.gwgallery-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 700px) {
+  .gwgrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .gwgrid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================================
+   HALAMAN MOCKUP (/preview/…)
+   Hanya untuk peragaan ke tim socmed — tidak ditautkan dari
+   navigasi situs dan memakai <meta robots noindex>. Halaman form
+   & galeri di sini memakai ulang komponen .page-giveaway di atas;
+   yang baru cuma chrome mockup + alat kurasi.
+   Kalau mockup sudah tidak dipakai, hapus folder /preview,
+   /data/mock-giveaway.js, dan blok CSS ini.
+   ============================================================ */
+
+/* Sama alasannya dengan .page-menu / .page-giveaway: beberapa
+   komponen di bawah menyetel display, jadi [hidden] perlu penjaga
+   berspesifisitas lebih tinggi. */
+.page-preview [hidden] { display: none; }
+
+/* ===== Pita penanda mockup ===== */
+.pvbanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 9px 14px;
+  background: var(--ink);
+  color: rgba(255,255,255,0.86);
+  font-size: 12px;
+  text-align: center;
+}
+
+.pvbanner-tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--ember);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pvnav {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  background: var(--cream-2);
+  border-bottom: 1px solid var(--sand);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.pvnav::-webkit-scrollbar { display: none; }
+
+.pvnav a {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pvnav a.is-active {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #fff;
+}
+
+.pvnote {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+.pvreset {
+  margin-top: 4px;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--sand);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== Pilihan kategori di form peserta =====
+   Radio asli disembunyikan (tetap ada demi aksesibilitas & semantik
+   form), yang terlihat cuma chip-nya. */
+.gwkat { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.gwkat-chip { cursor: pointer; }
+
+.gwkat-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.gwkat-chip span {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.gwkat-chip input:checked + span {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #fff;
+}
+
+.gwkat-chip input:focus-visible + span {
+  box-shadow: 0 0 0 3px rgba(201,70,31,0.2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gwkat-chip input:not(:checked) + span:hover { border-color: var(--terracotta); color: var(--terracotta); }
+}
+
+/* Tombol peraga kondisi galeri kosong vs ada isi */
+.pvtoggle {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.pvtoggle a {
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pvtoggle a.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* ============================================================
+   ALAT KURASI (/preview/giveaway/kurasi)
+   Desktop-first: kolomnya melebar mengikuti layar, tapi tetap
+   satu kolom penuh di ponsel.
+   ============================================================ */
+
+.kmain { max-width: 1180px; margin: 0 auto; padding: 0 16px 40px; }
+
+/* Blok di halaman ini memakai <section>, dan aturan dasar
+   `section { max-width: 720px; margin: 0 auto }` membuat isinya
+   menyempit di tengah layar lebar. Lebar sudah diurus .kmain. */
+.kmain section { max-width: none; margin: 0; }
+
+/* ===== Hitungan ===== */
+.kstats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px;
+  padding: 18px 0 4px;
+}
+
+.kstat {
+  background: #fff;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 13px 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.kstat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.kstat span { font-size: 12px; color: var(--ink-soft); }
+
+.kstat-warn { border-color: rgba(201,70,31,0.35); }
+.kstat-warn strong { color: var(--terracotta); }
+.kstat-ok { border-color: rgba(47,93,58,0.3); }
+.kstat-ok strong { color: var(--fern); }
+
+/* ===== Filter ===== */
+.kfilters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 0 10px;
+}
+
+.kfilter-group { display: flex; flex-direction: column; gap: 6px; }
+
+.kfilter-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.kchips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.kchip {
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.kchip.is-active {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #fff;
+}
+
+/* Dropdown tanggal — dibuat sepadan dengan chip di sebelahnya. */
+.kselect {
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.kselect:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 1px;
+}
+
+.khasil {
+  margin: 4px 0 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ===== Kisi kartu ===== */
+.kgrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.kcard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Kartu yang ditolak (atau tidak lagi lolos filter) menghilang dengan
+   animasi singkat, supaya jelas terlihat kartunya benar-benar pergi
+   dari daftar — bukan cuma berubah diam-diam. */
+@keyframes kcardOut {
+  to { opacity: 0; transform: scale(0.94); }
+}
+
+.kcard.is-hapus {
+  animation: kcardOut 220ms ease-in forwards;
+  pointer-events: none;
+}
+
+/* Kotak thumbnail sengaja rasio tetap 4:3 dengan object-fit cover:
+   foto portrait & landscape jadi sama tingginya, kisinya tidak
+   loncat-loncat. Orientasi aslinya tetap terbaca dari badge. */
+.kcard-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.kcard-media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Badge atas ditaruh dalam satu baris flex, bukan masing-masing
+   position:absolute. Waktu absolut, "↔ Landscape" dan "Menunggu
+   review" saling menimpa di kartu sempit dan teksnya terpotong. */
+.kcard-badges {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.kbadge {
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.kbadge-orientasi {
+  background: rgba(16,14,12,0.6);
+  color: #fff;
+}
+
+.kbadge-status { color: #fff; }
+.kstatus-pending  { background: rgba(201,70,31,0.92); }
+.kstatus-approved { background: rgba(47,93,58,0.92); }
+.kstatus-rejected { background: rgba(27,25,23,0.82); }
+
+.kbadge-dipakai {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(250,246,239,0.92);
+  color: var(--ink);
+}
+
+.kcard-body {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.kcard-who { display: flex; flex-direction: column; min-width: 0; }
+
+/* Nama IG bisa panjang; tanpa truncate dia menabrak tanggal di kanan. */
+.kcard-ig {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--terracotta);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kcard-nama {
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kcard-tanggal { flex-shrink: 0; font-size: 11.5px; color: var(--ink-soft); opacity: 0.8; }
+
+/* ===== Tombol aksi ===== */
+.kaksi { display: flex; gap: 7px; }
+
+.kbtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 38px;
+  padding: 0 10px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--sand);
+  background: var(--cream);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.kbtn.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.kbtn-ok.is-on { background: var(--fern); border-color: var(--fern); }
+.kbtn-no.is-on { background: var(--terracotta-deep); border-color: var(--terracotta-deep); }
+
+@media (hover: hover) and (pointer: fine) {
+  .kbtn:not(.is-on):hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .kchip:not(.is-active):hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .pvnav a:not(.is-active):hover { border-color: var(--terracotta); color: var(--terracotta); }
+}
+
+/* ===== Tag kategori ===== */
+.ktags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 2px;
+  border-top: 1px solid var(--cream-2);
+}
+
+.ktags-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  margin-right: 2px;
+}
+
+.ktag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--sand);
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ktag.is-on {
+  background: var(--fern);
+  border-color: var(--fern);
+  color: #fff;
+}
+
+.kempty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* ===== Toast ===== */
+.ktoast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 300;
+  max-width: 90vw;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  animation: fadeUp 200ms ease-out;
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 640px) {
+  .kstats { grid-template-columns: repeat(4, 1fr); }
+  .kgrid { grid-template-columns: repeat(2, 1fr); }
+  .kfilters { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+
+@media (min-width: 900px) {
+  .kgrid { grid-template-columns: repeat(3, 1fr); }
+  .kfilters { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .kgrid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kchip, .kbtn, .ktoast, .gwkat-chip span { transition: none; animation: none; }
+  /* Animasi dimatikan, tapi kartunya tetap harus menghilang. */
+  .kcard.is-hapus { animation: none; opacity: 0; }
 }

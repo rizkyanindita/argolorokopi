@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<title>Giveaway — Argo Loro Coffee &amp; Eatery | Selo, Boyolali</title>
+<meta name="description" content="Ikut giveaway Argo Loro Kopi. Foto momen kamu di Argo Loro, upload, dan follow @argoloro_kopi buat kesempatan menang.">
+
+<link rel="canonical" href="https://argoloro.vercel.app/giveaway">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Argo Loro">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://argoloro.vercel.app/giveaway">
+<meta property="og:title" content="Giveaway — Argo Loro Coffee &amp; Eatery">
+<meta property="og:description" content="Foto momen kamu di Argo Loro, upload, dan follow @argoloro_kopi buat kesempatan menang.">
+<meta property="og:image" content="https://argoloro.vercel.app/images/hero-1.jpg">
+<meta property="og:image:alt" content="Bangunan Argo Loro Kopi dengan Gunung Merapi di belakangnya">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
+<!-- style.css yang sama dengan beranda & menu — sudah ter-cache. -->
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="page-giveaway">
+
+<div class="gwbar">
+  <a class="gwbar-back" href="../" aria-label="Kembali ke beranda">←</a>
+  <div class="gwbar-title">
+    <strong>Giveaway</strong>
+    <small>Argo Loro · coffee &amp; eatery</small>
+  </div>
+</div>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="gwhero" aria-label="Giveaway Argo Loro">
+    <div class="gwhero-media">
+      <picture>
+        <source type="image/avif"
+                srcset="../images/opt/hero-2-640.avif 640w, ../images/opt/hero-2-960.avif 960w"
+                sizes="(min-width: 700px) 460px, 92vw">
+        <source type="image/webp"
+                srcset="../images/opt/hero-2-640.webp 640w, ../images/opt/hero-2-960.webp 960w"
+                sizes="(min-width: 700px) 460px, 92vw">
+        <img src="../images/opt/hero-2-960.webp"
+             alt="Kursi tinggi menghadap lembah dan Gunung Merapi di Argo Loro"
+             loading="eager" fetchpriority="high" decoding="async"
+             width="1115" height="1486">
+      </picture>
+    </div>
+    <!-- Kartu hadiah sengaja menumpuk di atas foto. Nominal hadiah adalah
+         satu-satunya alasan orang berhenti dan ikut, jadi dia yang dibuat
+         paling besar & paling kontras di halaman ini — bukan judulnya. -->
+    <div class="gwprize">
+      <span class="gwprize-kicker">🎁 Hadiah giveaway</span>
+      <p class="gwprize-amount" id="gwHadiahNominal">Rp200.000</p>
+      <p class="gwprize-what" id="gwHadiahDetail">Voucher makan gratis · 3 pemenang</p>
+    </div>
+
+    <h1 class="gwhero-title" id="gwJudul">Giveaway Argo Loro</h1>
+    <p class="gwhero-sub">Cukup upload satu foto momen kamu di Argo Loro. Gratis, nggak pakai ribet.</p>
+    <p class="gwhero-urgency" id="gwUrgency" hidden></p>
+  </section>
+
+  <!-- ===== CARA IKUT ===== -->
+  <section class="gwsteps" aria-label="Cara ikut">
+    <h2 class="section-title">Cara Ikut</h2>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-num" aria-hidden="true">1</span>
+        <p>Foto momen kamu di Argo Loro</p>
+      </li>
+      <li class="step">
+        <span class="step-num" aria-hidden="true">2</span>
+        <p>Upload di form bawah</p>
+      </li>
+      <li class="step">
+        <span class="step-num" aria-hidden="true">3</span>
+        <p>Follow <strong>@argoloro_kopi</strong> biar bisa diumumin pemenangnya</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== FORM ===== -->
+  <section class="gwform-section" id="daftar" aria-label="Form pendaftaran">
+    <h2 class="section-title">Daftar Sekarang</h2>
+
+    <!-- Ditampilkan lewat JS kalau deadline sudah lewat -->
+    <div class="gwclosed" id="gwClosed" hidden>
+      <span class="gwclosed-icon" aria-hidden="true">🎉</span>
+      <h3>Pendaftaran sudah ditutup</h3>
+      <p>Terima kasih buat semua yang sudah ikutan! Pantau pengumuman pemenang di Instagram kami.</p>
+      <a class="action action-primary" href="https://www.instagram.com/argoloro_kopi/" target="_blank" rel="noopener">
+        <span class="action-icon" aria-hidden="true">📷</span>
+        <span class="action-copy">
+          <strong>Follow @argoloro_kopi</strong>
+          <small>Cek pengumuman pemenang</small>
+        </span>
+      </a>
+    </div>
+
+    <form class="gwform" id="gwForm" novalidate>
+
+      <!-- Honeypot anti-spam: kosong dan tak terlihat untuk manusia,
+           tapi bot pengisi form otomatis biasanya mengisi semua field. -->
+      <div class="gwhoneypot" aria-hidden="true">
+        <label for="gwWebsite">Website</label>
+        <input type="text" id="gwWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="gwfield">
+        <label for="gwNama">Nama</label>
+        <input type="text" id="gwNama" name="nama" autocomplete="name" required>
+      </div>
+
+      <div class="gwfield">
+        <label for="gwWa">Nomor WhatsApp</label>
+        <input type="tel" id="gwWa" name="nomor_wa" placeholder="08xx atau +62xx" autocomplete="tel" required>
+      </div>
+
+      <div class="gwfield">
+        <label for="gwIg">Username Instagram</label>
+        <div class="gwig-wrap">
+          <span class="gwig-at" aria-hidden="true">@</span>
+          <input type="text" id="gwIg" name="instagram_username" placeholder="username" autocomplete="off" required>
+        </div>
+      </div>
+
+      <div class="gwfield">
+        <label for="gwFoto">Upload foto</label>
+        <div class="gwupload" id="gwUploadWrap">
+          <input type="file" id="gwFoto" name="foto" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required>
+          <label class="gwupload-btn" for="gwFoto" id="gwUploadBtn">
+            <span class="gwupload-icon" aria-hidden="true">📸</span>
+            <span>Pilih foto (maks. 5MB)</span>
+          </label>
+          <div class="gwpreview" id="gwPreview" hidden>
+            <img id="gwPreviewImg" alt="Pratinjau foto yang dipilih">
+            <button type="button" class="gwpreview-remove" id="gwPreviewRemove" aria-label="Hapus foto">×</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="gwconsent">
+        <input type="checkbox" id="gwConsent" name="consent_repost" required>
+        <span>Saya setuju foto ini boleh di-repost oleh Argo Loro</span>
+      </label>
+
+      <p class="gwerror" id="gwError" role="alert" hidden></p>
+
+      <button class="gwsubmit" type="submit" id="gwSubmit">Kirim</button>
+    </form>
+
+    <div class="gwsuccess" id="gwSuccess" hidden>
+      <span class="gwsuccess-icon" aria-hidden="true">🎉</span>
+      <h3>Makasih udah ikutan!</h3>
+      <p>Fotomu sedang kami cek dulu sebelum tampil di galeri. Follow Instagram kami biar nggak ketinggalan pengumuman pemenang.</p>
+      <a class="action action-primary" id="gwShareWa" href="#" target="_blank" rel="noopener">
+        <span class="action-icon" aria-hidden="true">💬</span>
+        <span class="action-copy">
+          <strong>Ajak Teman lewat WhatsApp</strong>
+          <small>Share ke grup atau teman</small>
+        </span>
+      </a>
+      <a class="action action-ghost" href="https://www.instagram.com/argoloro_kopi/" target="_blank" rel="noopener">
+        <span class="action-icon" aria-hidden="true">📷</span>
+        <span class="action-copy">
+          <strong>Follow @argoloro_kopi</strong>
+          <small>Biar nggak ketinggalan pengumuman</small>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== DEADLINE ===== -->
+  <section class="gwdeadline" aria-label="Deadline dan pengumuman">
+    <div class="gwdeadline-grid">
+      <div class="gwdeadline-item">
+        <span class="tile-icon" aria-hidden="true">⏳</span>
+        <h3>Deadline upload</h3>
+        <p id="gwDeadlineTanggal">Memuat…</p>
+      </div>
+      <div class="gwdeadline-item">
+        <span class="tile-icon" aria-hidden="true">🏆</span>
+        <h3>Pengumuman pemenang</h3>
+        <p id="gwPengumumanTanggal">Memuat…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LINK GALERI ===== -->
+  <section class="gwgaleri-link" aria-label="Galeri peserta">
+    <a class="textlink" href="galeri/">Lihat foto peserta lain →</a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">ARGOLORO</p>
+  <p>Selo, Boyolali · Buka tiap hari 09.00–21.00</p>
+  <p class="footer-fine">&copy; <span id="year"></span> Argo Loro Kopi</p>
+</footer>
+
+<!-- defer menjaga urutan eksekusi (config → lib Supabase → giveaway.js)
+     tanpa memblokir parsing HTML, sama seperti pola di menu.html. -->
+<script src="../giveaway-config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
+<script src="../giveaway.js" defer></script>
+
+<!-- Vercel Web Analytics — lihat catatan di index.html -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<meta name="robots" content="noindex, nofollow">
+<title>[Mockup] Galeri Giveaway — Argo Loro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="page-giveaway page-preview">
+
+<div class="pvbanner">
+  <span class="pvbanner-tag">Mockup</span>
+  <span>Data dummy — foto peserta palsu</span>
+</div>
+<nav class="pvnav" aria-label="Navigasi mockup">
+  <a href="/preview/giveaway/">Form Peserta</a>
+  <a href="/preview/giveaway/galeri/" class="is-active">Galeri Publik</a>
+  <a href="/preview/giveaway/kurasi/">Kurasi Tim</a>
+</nav>
+
+<div class="gwbar">
+  <a class="gwbar-back" href="/preview/giveaway/" aria-label="Kembali ke halaman giveaway">←</a>
+  <div class="gwbar-title">
+    <strong>Galeri Giveaway</strong>
+    <small>Argo Loro · coffee &amp; eatery</small>
+  </div>
+</div>
+
+<main>
+  <section class="gwgallery-head">
+    <h1 class="section-title">Foto Peserta Giveaway</h1>
+    <p class="gwgallery-sub">Klik nama untuk buka profil Instagram-nya.</p>
+
+    <!-- Khusus mockup: tombol untuk memperagakan kondisi galeri masih
+         kosong (sebelum ada foto yang di-approve). -->
+    <div class="pvtoggle">
+      <a href="/preview/giveaway/galeri/" id="pvToggleIsi">Ada isi</a>
+      <a href="/preview/giveaway/galeri/?kosong=1" id="pvToggleKosong">Kondisi kosong</a>
+    </div>
+  </section>
+
+  <section class="gwgallery-section" aria-label="Galeri foto peserta">
+    <div class="gwgrid" id="gwGrid"></div>
+
+    <p class="gwgallery-empty" id="gwGalleryEmpty" hidden>
+      Belum ada foto yang tampil di sini.<br>
+      <small>Foto peserta muncul setelah dicek tim kami — cek lagi nanti ya.</small>
+    </p>
+  </section>
+
+  <section class="gwgaleri-link" aria-label="Ikut giveaway">
+    <a class="textlink" href="/preview/giveaway/">Ikut giveaway juga →</a>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">ARGOLORO</p>
+  <p>Selo, Boyolali · Buka tiap hari 09.00–21.00</p>
+  <p class="footer-fine">Mockup pratinjau · <span id="year"></span></p>
+</footer>
+
+<script src="/data/mock-giveaway.js" defer></script>
+<script src="/preview/preview-galeri.js" defer></script>
+</body>
+</html>

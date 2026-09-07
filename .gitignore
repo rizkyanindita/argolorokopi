@@ -1,5 +1,8 @@
 # Kredensial & cache Vercel — jangan pernah di-commit
 .vercel
 
+# Kredensial Supabase untuk fitur giveaway — lihat giveaway-config.example.js
+giveaway-config.js
+
 # macOS
 .DS_Store

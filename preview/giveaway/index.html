@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C9461F">
+<!-- MOCKUP: jangan sampai terindeks Google. Halaman ini juga tidak
+     ditautkan dari navigasi situs utama sama sekali. -->
+<meta name="robots" content="noindex, nofollow">
+<title>[Mockup] Form Giveaway — Argo Loro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;600;700&display=swap">
+</noscript>
+<!-- Path absolut dari root: ketiga halaman mockup ada di kedalaman
+     folder yang berbeda, jadi path relatif gampang salah. -->
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="page-giveaway page-preview">
+
+<!-- ===== Chrome khusus mockup (tidak ada di versi jadi) ===== -->
+<div class="pvbanner">
+  <span class="pvbanner-tag">Mockup</span>
+  <span>Data dummy — tidak ada yang benar-benar terkirim</span>
+</div>
+<nav class="pvnav" aria-label="Navigasi mockup">
+  <a href="/preview/giveaway/" class="is-active">Form Peserta</a>
+  <a href="/preview/giveaway/galeri/">Galeri Publik</a>
+  <a href="/preview/giveaway/kurasi/">Kurasi Tim</a>
+</nav>
+
+<div class="gwbar">
+  <a class="gwbar-back" href="/preview/giveaway/galeri/" aria-label="Ke galeri">←</a>
+  <div class="gwbar-title">
+    <strong>Giveaway</strong>
+    <small>Argo Loro · coffee &amp; eatery</small>
+  </div>
+</div>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="gwhero" aria-label="Giveaway Argo Loro">
+    <div class="gwhero-media">
+      <img src="/preview/mock-photos/p01.webp"
+           alt="Pemandangan Gunung Merapi dari Argo Loro"
+           loading="eager" fetchpriority="high" decoding="async"
+           width="600" height="800">
+    </div>
+
+    <div class="gwprize">
+      <span class="gwprize-kicker">🎁 Hadiah giveaway</span>
+      <p class="gwprize-amount" id="gwHadiahNominal">Rp200.000</p>
+      <p class="gwprize-what" id="gwHadiahDetail">Voucher makan gratis · 3 pemenang</p>
+    </div>
+
+    <h1 class="gwhero-title" id="gwJudul">Giveaway Argo Loro</h1>
+    <p class="gwhero-sub">Cukup upload satu foto momen kamu di Argo Loro. Gratis, nggak pakai ribet.</p>
+    <p class="gwhero-urgency" id="gwUrgency" hidden></p>
+  </section>
+
+  <!-- ===== CARA IKUT ===== -->
+  <section class="gwsteps" aria-label="Cara ikut">
+    <h2 class="section-title">Cara Ikut</h2>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-num" aria-hidden="true">1</span>
+        <p>Foto momen kamu di Argo Loro</p>
+      </li>
+      <li class="step">
+        <span class="step-num" aria-hidden="true">2</span>
+        <p>Upload di form bawah</p>
+      </li>
+      <li class="step">
+        <span class="step-num" aria-hidden="true">3</span>
+        <p>Follow <strong>@argoloro_kopi</strong> biar bisa diumumin pemenangnya</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== FORM ===== -->
+  <section class="gwform-section" id="daftar" aria-label="Form pendaftaran">
+    <h2 class="section-title">Daftar Sekarang</h2>
+
+    <form class="gwform" id="gwForm" novalidate>
+
+      <div class="gwfield">
+        <label for="gwNama">Nama</label>
+        <input type="text" id="gwNama" name="nama" autocomplete="name" required>
+      </div>
+
+      <div class="gwfield">
+        <label for="gwWa">Nomor WhatsApp</label>
+        <!-- Kode negara dipatok +62 dan tidak bisa diedit, jadi peserta
+             cukup mengetik nomornya saja. Ini menghilangkan sumber salah
+             ketik paling sering: 0 di depan, spasi, atau +62 dobel. -->
+        <div class="gwprefix-wrap">
+          <span class="gwprefix" aria-hidden="true">+62</span>
+          <input type="tel" id="gwWa" name="nomor_wa" placeholder="81234567890"
+                 inputmode="numeric" autocomplete="tel-national" required>
+        </div>
+      </div>
+
+      <div class="gwfield">
+        <label for="gwIg">Username Instagram</label>
+        <div class="gwprefix-wrap">
+          <span class="gwprefix" aria-hidden="true">@</span>
+          <input type="text" id="gwIg" name="instagram_username" placeholder="username" autocomplete="off" required>
+        </div>
+      </div>
+
+      <div class="gwfield">
+        <span class="gwfield-label">Kategori foto</span>
+        <!-- Chip dirender JS dari MOCK_KATEGORI di data/mock-giveaway.js,
+             jadi daftarnya selalu sama dengan filter di halaman kurasi. -->
+        <div class="gwkat" id="gwKategori" role="radiogroup" aria-label="Kategori foto"></div>
+      </div>
+
+      <div class="gwfield">
+        <label for="gwFoto">Upload foto</label>
+        <div class="gwupload">
+          <!-- Preview dibaca dari berkas lokal lewat URL.createObjectURL.
+               Tidak ada request ke mana pun — fotonya tidak pernah
+               meninggalkan HP yang membukanya. -->
+          <input type="file" id="gwFoto" name="foto" accept="image/*" required>
+          <label class="gwupload-btn" for="gwFoto" id="gwUploadBtn">
+            <span class="gwupload-icon" aria-hidden="true">📸</span>
+            <span>Pilih foto (maks. 5MB)</span>
+          </label>
+          <div class="gwpreview" id="gwPreview" hidden>
+            <img id="gwPreviewImg" alt="Pratinjau foto yang dipilih">
+            <button type="button" class="gwpreview-remove" id="gwPreviewRemove" aria-label="Hapus foto">×</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="gwconsent">
+        <input type="checkbox" id="gwConsent" name="consent_repost" required>
+        <span>Saya setuju foto ini boleh di-repost oleh Argo Loro</span>
+      </label>
+
+      <p class="gwerror" id="gwError" role="alert" hidden></p>
+
+      <button class="gwsubmit" type="submit" id="gwSubmit">Kirim</button>
+      <p class="pvnote">Simulasi — tombol ini tidak mengirim data ke mana pun.</p>
+    </form>
+
+    <div class="gwsuccess" id="gwSuccess" hidden>
+      <span class="gwsuccess-icon" aria-hidden="true">🎉</span>
+      <h3>Makasih udah ikutan!</h3>
+      <p>Fotomu sedang kami cek dulu sebelum tampil di galeri. Follow Instagram kami biar nggak ketinggalan pengumuman pemenang.</p>
+      <a class="action action-primary" id="gwShareWa" href="#" target="_blank" rel="noopener">
+        <span class="action-icon" aria-hidden="true">💬</span>
+        <span class="action-copy">
+          <strong>Ajak Teman lewat WhatsApp</strong>
+          <small>Share ke grup atau teman</small>
+        </span>
+      </a>
+      <a class="action action-ghost" href="https://www.instagram.com/argoloro_kopi/" target="_blank" rel="noopener">
+        <span class="action-icon" aria-hidden="true">📷</span>
+        <span class="action-copy">
+          <strong>Follow @argoloro_kopi</strong>
+          <small>Biar nggak ketinggalan pengumuman</small>
+        </span>
+      </a>
+      <button class="pvreset" type="button" id="gwReset">↺ Ulangi demo dari awal</button>
+    </div>
+  </section>
+
+  <!-- ===== DEADLINE ===== -->
+  <section class="gwdeadline" aria-label="Deadline dan pengumuman">
+    <div class="gwdeadline-grid">
+      <div class="gwdeadline-item">
+        <span class="tile-icon" aria-hidden="true">⏳</span>
+        <h3>Deadline upload</h3>
+        <p id="gwDeadlineTanggal">Memuat…</p>
+      </div>
+      <div class="gwdeadline-item">
+        <span class="tile-icon" aria-hidden="true">🏆</span>
+        <h3>Pengumuman pemenang</h3>
+        <p id="gwPengumumanTanggal">Memuat…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LINK GALERI ===== -->
+  <section class="gwgaleri-link" aria-label="Galeri peserta">
+    <a class="textlink" href="/preview/giveaway/galeri/">Lihat foto peserta lain →</a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-mark">ARGOLORO</p>
+  <p>Selo, Boyolali · Buka tiap hari 09.00–21.00</p>
+  <p class="footer-fine">Mockup pratinjau · <span id="year"></span></p>
+</footer>
+
+<script src="/data/mock-giveaway.js" defer></script>
+<script src="/preview/preview-form.js" defer></script>
+</body>
+</html>
