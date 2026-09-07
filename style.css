@@ -1233,6 +1233,135 @@ section {
   text-align: center;
 }
 
+/* ===== Tombol & penampil menu versi foto ===== */
+.menufoto-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--sand);
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 180ms ease, transform 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menufoto-btn:active { transform: scale(0.99); }
+
+.menufoto-btn-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+
+.menufoto-btn-copy { display: flex; flex-direction: column; min-width: 0; }
+
+.menufoto-btn-copy strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+}
+
+.menufoto-btn-copy small { font-size: 12px; color: var(--ink-soft); }
+
+.menufoto-btn-arrow { margin-left: auto; font-size: 16px; opacity: 0.55; flex-shrink: 0; }
+
+@media (hover: hover) and (pointer: fine) {
+  .menufoto-btn:hover { border-color: var(--terracotta); }
+}
+
+/* Penampil layar penuh. Harus menang dari .menunav (z-index 60) dan
+   .sticky-cta (z-index 90) yang sama-sama melayang di halaman ini. */
+.fotoviewer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background: rgba(16,14,12,0.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeUp 200ms ease-out;
+}
+
+.fotoviewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 12px 16px;
+  background: rgba(16,14,12,0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.fotoviewer-close {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fotoviewer-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 14px 30px;
+}
+
+.fotoviewer-hint,
+.fotoviewer-note {
+  margin: 0 0 14px;
+  text-align: center;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.72);
+}
+
+.fotoviewer-note { margin: 18px 0 0; }
+
+.fotoviewer-page { margin: 0 0 18px; }
+
+.fotoviewer-page img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  background: var(--cream);
+}
+
+.fotoviewer-page figcaption {
+  margin-top: 7px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.66);
+}
+
+/* Halaman di belakang dikunci saat penampil terbuka. */
+body.is-locked { overflow: hidden; }
+
+@media (min-width: 700px) {
+  .fotoviewer-body { max-width: 900px; width: 100%; margin: 0 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fotoviewer { animation: none; }
+  .menufoto-btn { transition: none; }
+}
+
 /* ===== Status pencarian & keadaan kosong ===== */
 .search-status {
   margin: 14px 0 0;

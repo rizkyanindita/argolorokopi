@@ -102,6 +102,20 @@
 </div>
 
 <main class="menu-main">
+
+  <!-- Tombol menu versi foto. Gambarnya baru diunduh saat penampil
+       dibuka (loading="lazy" di dalam elemen hidden), jadi pengunjung
+       yang cuma memakai menu digital tidak membayar sepeser byte pun —
+       prinsip yang sama dengan fasad peta di beranda. -->
+  <button class="menufoto-btn" type="button" id="menuFotoOpen">
+    <span class="menufoto-btn-icon" aria-hidden="true">🖼️</span>
+    <span class="menufoto-btn-copy">
+      <strong>Lihat menu versi foto</strong>
+      <small>3 halaman menu cetak</small>
+    </span>
+    <span class="menufoto-btn-arrow" aria-hidden="true">→</span>
+  </button>
+
   <p class="search-status" id="searchStatus" hidden></p>
   <div id="menuMount"></div>
 
@@ -125,6 +139,61 @@
       <button type="button" class="catsheet-close" id="catSheetClose" aria-label="Tutup">×</button>
     </div>
     <div class="catsheet-body" id="catSheetBody"></div>
+  </div>
+</div>
+
+<!-- ===== Penampil menu versi foto =====
+     Sumbernya images/menuargolawu*.png (6,5 MB, tidak ikut di-deploy).
+     Yang dipakai di sini varian AVIF/WebP di images/opt/ — 435 KB untuk
+     ketiganya. Cara membuat ulang ada di HANDOFF.md. -->
+<div class="fotoviewer" id="menuFotoViewer" hidden>
+  <div class="fotoviewer-bar">
+    <strong>Menu cetak</strong>
+    <button type="button" class="fotoviewer-close" id="menuFotoClose" aria-label="Tutup">×</button>
+  </div>
+
+  <div class="fotoviewer-body">
+    <p class="fotoviewer-hint">Ketuk gambar untuk membuka ukuran penuh — di sana bisa dicubit untuk zoom.</p>
+
+    <figure class="fotoviewer-page">
+      <a href="images/opt/menu-cetak-1.webp" target="_blank" rel="noopener">
+        <picture>
+          <source type="image/avif" srcset="images/opt/menu-cetak-1.avif">
+          <img src="images/opt/menu-cetak-1.webp" width="1979" height="1399"
+               loading="lazy" decoding="async"
+               alt="Halaman 1 menu cetak: coffee, manual brewing, black series, tea, non coffee, mocktails, dan signature beserta harganya">
+        </picture>
+      </a>
+      <figcaption>Halaman 1 — Kopi, tea, mocktails, signature</figcaption>
+    </figure>
+
+    <figure class="fotoviewer-page">
+      <a href="images/opt/menu-cetak-2.webp" target="_blank" rel="noopener">
+        <picture>
+          <source type="image/avif" srcset="images/opt/menu-cetak-2.avif">
+          <img src="images/opt/menu-cetak-2.webp" width="1979" height="1399"
+               loading="lazy" decoding="async"
+               alt="Halaman 2 menu cetak: wedangan, juice and smoothies, desert, blend and frappe, serta home made pizza">
+        </picture>
+      </a>
+      <figcaption>Halaman 2 — Wedangan, juice, frappe, pizza</figcaption>
+    </figure>
+
+    <figure class="fotoviewer-page">
+      <a href="images/opt/menu-cetak-3.webp" target="_blank" rel="noopener">
+        <picture>
+          <source type="image/avif" srcset="images/opt/menu-cetak-3.avif">
+          <img src="images/opt/menu-cetak-3.webp" width="1979" height="1399"
+               loading="lazy" decoding="async"
+               alt="Halaman 3 menu cetak: starter, special menu, dimsum, pasta, rice bowl, mie, dan nasi goreng">
+        </picture>
+      </a>
+      <figcaption>Halaman 3 — Starter, rice bowl, mie, nasi goreng</figcaption>
+    </figure>
+
+    <p class="fotoviewer-note">
+      Harga di menu digital lebih mudah dicari dan selalu ikut pembaruan.
+    </p>
   </div>
 </div>
 

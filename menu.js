@@ -361,3 +361,48 @@
 
   terapkan();
 })();
+
+/* ============================================================
+   PENAMPIL MENU VERSI FOTO
+   Blok terpisah dengan sengaja: kalau menu-data.js bermasalah,
+   IIFE di atas berhenti di guard-nya dan seluruh isinya mati.
+   Tombol foto menu tidak bergantung pada data itu, jadi tetap
+   berfungsi sebagai jaring pengaman terakhir.
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var tombol = document.getElementById("menuFotoOpen");
+  var viewer = document.getElementById("menuFotoViewer");
+  var tutup = document.getElementById("menuFotoClose");
+  if (!tombol || !viewer || !tutup) return;
+
+  var body = viewer.querySelector(".fotoviewer-body");
+
+  function buka() {
+    viewer.hidden = false;
+    // Kunci gulir halaman di belakang, kalau tidak gulirannya "bocor"
+    // ke daftar menu begitu penampil sudah mentok di bawah.
+    document.body.classList.add("is-locked");
+    if (body) body.scrollTop = 0;
+    tutup.focus();
+  }
+
+  function tutupViewer() {
+    viewer.hidden = true;
+    document.body.classList.remove("is-locked");
+    tombol.focus();
+  }
+
+  tombol.addEventListener("click", buka);
+  tutup.addEventListener("click", tutupViewer);
+
+  // Klik di area gelap di luar isi = tutup.
+  viewer.addEventListener("click", function (e) {
+    if (e.target === viewer || e.target === body) tutupViewer();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !viewer.hidden) tutupViewer();
+  });
+})();
